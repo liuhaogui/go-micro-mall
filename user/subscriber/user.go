@@ -2,7 +2,7 @@ package subscriber
 
 import (
 	"context"
-	log "github.com/micro/go-micro/v2/logger"
+	"github.com/micro/go-micro/util/log"
 
 	user "github.com/liuhaogui/go-micro-mall/user/proto/user"
 )

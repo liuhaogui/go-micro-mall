@@ -4,6 +4,7 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 	config "github.com/micro/go-micro/config"
 	"github.com/micro/go-micro/config/source/consul"
+
 	"log"
 	"sync"
 	"time"

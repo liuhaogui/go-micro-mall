@@ -2,16 +2,16 @@ package handler
 
 import (
 	"context"
-	"github.com/liuhaogui/go-micro-mall/common/token"
-	pb "github.com/liuhaogui/go-micro-mall/user/proto/user"
-	uuid "github.com/satori/go.uuid"
-	"time"
 	"errors"
-	"github.com/satori/go.uuid"
-	"github.com/micro/go-micro/util/log"
-
+	"github.com/liuhaogui/go-micro-mall/common/token"
 	db "github.com/liuhaogui/go-micro-mall/user/model"
+	pb "github.com/liuhaogui/go-micro-mall/user/proto/user"
+	"github.com/micro/go-micro/util/log"
+	"time"
+	uuid "github.com/satori/go.uuid"
 )
+
+const issuer = "go.micro.srv.auth"
 
 type UserService struct {
 	token *token.Token
@@ -20,7 +20,6 @@ type UserService struct {
 func New(token *token.Token) *UserService {
 	return &UserService{token: token}
 }
-
 
 // Create 创建新User
 func (ser *UserService) Create(ctx context.Context, req *pb.User, resp *pb.Response) error {

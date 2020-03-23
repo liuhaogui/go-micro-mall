@@ -1,10 +1,8 @@
 package main
 
 import (
+	"github.com/micro/go-micro/registry/consul"
 	"time"
-
-	"github.com/liuhaogui/go-micro-mall/common/token"
-	"github.com/liuhaogui/go-micro-mall/common/tracer"
 
 	"github.com/liuhaogui/go-micro-mall/user/handler"
 	user "github.com/liuhaogui/go-micro-mall/user/proto/user"
@@ -13,13 +11,19 @@ import (
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/service/grpc"
 	"github.com/micro/go-micro/util/log"
+	"github.com/micro/go-micro/registry"
 
 	ocplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
 	opentracing "github.com/opentracing/opentracing-go"
 
+	"github.com/liuhaogui/go-micro-mall/common/token"
+	"github.com/liuhaogui/go-micro-mall/common/tracer"
+
+	db "github.com/liuhaogui/go-micro-mall/user/model"
+
 )
 
-const name = "go.micro.svc.user"
+const name = "go.micro.srv.user"
 
 func main() {
 	// token
@@ -33,6 +37,12 @@ func main() {
 	}
 	defer io.Close()
 	opentracing.SetGlobalTracer(t)
+
+	reg := consul.NewRegistry(func(op *registry.Options) {
+		op.Addrs = []string{
+			"127.0.0.1:8500",
+		}
+	})
 
 	// New Service
 	service := grpc.NewService(
@@ -51,19 +61,16 @@ func main() {
 			consulAddr = ctx.String("consul_address")
 			token.InitConfig(consulAddr, "micro", "config", "jwt-key", "key")
 		}),
+		micro.Registry(reg),
+		micro.Address(":8091"),
 	)
 
 	// Initialise service
 	service.Init()
-
 	db.Init(consulAddr)
 
 	// Register Handler
-	//user.RegisterUserHandler(service.Server(), new(handler.User))
 	user.RegisterUserServiceHandler(service.Server(), handler.New(token))
-
-	// Register Struct as Subscriber
-	//micro.RegisterSubscriber("micro.svc.user.service.user", service.Server(), new(subscriber.User))
 
 	// Run service
 	if err := service.Run(); err != nil {
