@@ -1,4 +1,4 @@
-module github.com/liuhaogui/go-micro-mall/user
+module github.com/liuhaogui/go-micro-mall/api
 
 go 1.13
 
