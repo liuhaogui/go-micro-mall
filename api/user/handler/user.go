@@ -12,7 +12,7 @@ import (
 	"net/http"
 	"github.com/liuhaogui/go-micro-mall/common/token"
 
-	helloS "github.com/liuhaogui/go-micro-mall/example/proto/example"
+	//helloS "github.com/liuhaogui/go-micro-mall/example/proto/example"
 	userS "github.com/liuhaogui/go-micro-mall/user/proto/user"
 )
 
@@ -21,7 +21,7 @@ const name = "go.micro.api.user"
 // UserAPIService 服务
 type UserAPIService struct {
 	jwt    *token.Token
-	helloC helloS.ExampleService
+	//helloC helloS.ExampleService
 	userC  userS.UserService
 	pub    micro.Publisher
 }
@@ -30,7 +30,7 @@ type UserAPIService struct {
 func New(client client.Client, pub micro.Publisher, token *token.Token) *UserAPIService {
 	return &UserAPIService{
 		jwt:    token,
-		helloC: helloS.NewExampleService("", client),
+		//helloC: helloS.NewExampleService("", client),
 		userC:  userS.NewUserService("", client),
 		pub:    pub,
 	}

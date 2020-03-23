@@ -1,6 +1,10 @@
 package main
 
 import (
+	"log"
+	"net"
+	"net/http"
+
 	ph "github.com/afex/hystrix-go/hystrix"
 	"github.com/liuhaogui/go-micro-mall/common/token"
 	"github.com/liuhaogui/go-micro-mall/common/tracer"
@@ -8,14 +12,12 @@ import (
 	"github.com/liuhaogui/go-micro-mall/common/warapper/breaker/hystrix"
 	"github.com/liuhaogui/go-micro-mall/common/warapper/metrics/prometheus"
 	"github.com/liuhaogui/go-micro-mall/common/warapper/tracer/opentracing/stdhttp"
+
 	"github.com/micro/cli"
 	"github.com/micro/go-plugins/micro/cors"
 	"github.com/micro/micro/cmd"
 	"github.com/micro/micro/plugin"
-	"github.com/opentracing/opentracing-go"
-	"log"
-	"net"
-	"net/http"
+	opentracing "github.com/opentracing/opentracing-go"
 )
 
 const name = "api-gateway"

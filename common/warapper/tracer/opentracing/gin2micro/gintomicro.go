@@ -1,12 +1,18 @@
 package gin2micro
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/opentracing/opentracing-go"
-	"github.com/opentracing/opentracing-go/ext"
+	"context"
 	"math/rand"
 	"net/http"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/go-log/log"
+	"github.com/micro/go-micro/metadata"
+
+	"github.com/opentracing/opentracing-go"
+	"github.com/opentracing/opentracing-go/ext"
+
 )
 
 const contextTracerKey = "Tracer-context"
