@@ -1,6 +1,7 @@
 package util
 
 import (
+	"fmt"
 	"github.com/liuhaogui/go-micro-mall/common/basic"
 	"github.com/liuhaogui/go-micro-mall/common/config"
 	"github.com/micro/go-plugins/config/source/grpc"
@@ -37,4 +38,15 @@ func InitGetAppCfg(appName string) (cfg *AppCfg) {
 
 	log.Logf("[initCfg] 配置，cfg：%v", cfg)
 	return
+}
+
+
+func GetConsulAddress() string {
+	consulCfg := Etcd{}
+	err := config.C().App("consul", consulCfg)
+	if err != nil {
+		panic(err)
+	}
+
+	return fmt.Sprintf("%s:%d", consulCfg.Host, consulCfg.Port)
 }

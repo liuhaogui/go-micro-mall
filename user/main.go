@@ -35,7 +35,7 @@ var (
 )
 
 func init()  {
-	appCfg = util.InitGetAppCfg(appName)
+	appCfg = cfgUtil.InitGetAppCfg(appName)
 }
 
 func main() {
@@ -68,7 +68,7 @@ func main() {
 			Name:   "consul_address",
 			Usage:  "consul address for K/V",
 			EnvVar: "CONSUL_ADDRESS",
-			Value:  util.GetConsulAddress(appName),
+			Value:  cfgUtil.GetConsulAddress(),
 		}),
 		micro.Action(func(ctx *cli.Context) {
 			token.InitConfig(ctx.String("consul_address"), "micro", "config", "jwt-key", "key")
