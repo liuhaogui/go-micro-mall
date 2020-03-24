@@ -21,10 +21,6 @@ import (
 	db "github.com/liuhaogui/go-micro-mall/user/model"
 )
 
-type userCfg struct {
-	comCfg.AppCfg
-}
-
 const (
 	appName      = "user-srv"
 	appNameSpace = "go.micro.srv.user"

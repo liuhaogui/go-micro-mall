@@ -10,7 +10,7 @@ replace (
 )
 
 require (
-	github.com/micro/go-micro v1.18.0 // indirect
-	github.com/micro/go-plugins v1.5.1 // indirect
-	google.golang.org/grpc v1.28.0 // indirect
+	github.com/micro/go-micro v1.18.0
+	github.com/micro/go-plugins v1.5.1
+	google.golang.org/grpc v1.28.0
 )

@@ -42,7 +42,7 @@ func InitGetAppCfg(appName string) (cfg *AppCfg) {
 
 
 func GetConsulAddress() string {
-	consulCfg := Etcd{}
+	consulCfg := &Etcd{}
 	err := config.C().App("consul", consulCfg)
 	if err != nil {
 		panic(err)
