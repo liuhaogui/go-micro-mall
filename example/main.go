@@ -4,7 +4,6 @@ import (
 	"context"
 	"github.com/liuhaogui/go-micro-mall/common/tracer"
 	"github.com/micro/go-micro"
-	"github.com/micro/go-micro/registry/consul"
 	"github.com/micro/go-micro/util/log"
 	"github.com/opentracing/opentracing-go"
 	"time"
@@ -14,7 +13,6 @@ import (
 
 	example "github.com/liuhaogui/go-micro-mall/example/proto/example"
 	ocplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
-	"github.com/micro/go-micro/registry"
 	//"github.com/micro/cli"
 )
 
@@ -33,11 +31,11 @@ func main() {
 	defer io.Close()
 	opentracing.SetGlobalTracer(t)
 
-	reg := consul.NewRegistry(func(op *registry.Options) {
-		op.Addrs = []string{
-			"127.0.0.1:8500",
-		}
-	})
+	//reg := consul.NewRegistry(func(op *registry.Options) {
+	//	op.Addrs = []string{
+	//		"127.0.0.1:8500",
+	//	}
+	//})
 
 
 	// New Service
@@ -46,7 +44,7 @@ func main() {
 		micro.WrapHandler(ocplugin.NewHandlerWrapper(t)),
 		micro.RegisterTTL(time.Second*15),
 		micro.RegisterInterval(time.Second*10),
-		micro.Registry(reg),
+		//micro.Registry(reg),
 		micro.Version("latest"),
 	)
 

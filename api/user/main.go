@@ -9,8 +9,6 @@ import (
 	"github.com/liuhaogui/go-micro-mall/common/warapper/tracer/opentracing/gin2micro"
 	"github.com/micro/cli"
 	"github.com/micro/go-micro/client"
-	"github.com/micro/go-micro/registry"
-	"github.com/micro/go-micro/registry/consul"
 	"github.com/micro/go-micro/util/log"
 
 	"github.com/micro/go-micro/service/grpc"
@@ -40,11 +38,11 @@ func main() {
 	opentracing.SetGlobalTracer(t)
 
 	//consul
-	reg := consul.NewRegistry(func(op *registry.Options) {
-		op.Addrs = []string{
-			consul_address,
-		}
-	})
+	//reg := consul.NewRegistry(func(op *registry.Options) {
+	//	op.Addrs = []string{
+	//		consul_address,
+	//	}
+	//})
 
 	service := web.NewService(
 		web.Name(name),
@@ -52,10 +50,16 @@ func main() {
 		web.RegisterTTL(time.Second*15),
 		web.RegisterInterval(time.Second*10),
 		web.MicroService(grpc.NewService()),
+		web.Flags(cli.StringFlag{
+			Name:   "consul_address",
+			Usage:  "consul address for K/V",
+			EnvVar: "CONSUL_ADDRESS",
+			Value:  consul_address,
+		}),
 		web.Action(func(ctx *cli.Context) {
 			token.InitConfig(consul_address, "micro", "config", "jwt-key", "key")
 		}),
-		web.Registry(reg),
+		//web.Registry(reg),
 		web.Address(":8081"),
 	)
 

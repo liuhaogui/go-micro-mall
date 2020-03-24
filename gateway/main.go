@@ -5,8 +5,6 @@ import (
 	"github.com/liuhaogui/go-micro-mall/common/warapper/auth"
 	"github.com/liuhaogui/go-micro-mall/common/warapper/breaker/hystrix"
 	"github.com/micro/go-micro"
-	"github.com/micro/go-micro/registry/consul"
-	"github.com/micro/go-micro/registry"
 	"log"
 	"net"
 	"net/http"
@@ -27,7 +25,7 @@ import (
 	opentracing "github.com/opentracing/opentracing-go"
 )
 
-const app_name = "api_gateway"
+const app_name = "go.micro.api"
 const consul_address = "127.0.0.1:8500"
 func init() {
 	token := &token.Token{}
@@ -39,12 +37,19 @@ func init() {
 		plugin.WithHandler(
 			auth.JWTAuthWrapper(token),
 		),
+		plugin.WithFlag(cli.StringFlag{
+			Name:   "consul_address",
+			Usage:  "consul address for K/V",
+			EnvVar: "CONSUL_ADDRESS",
+			Value:  consul_address,
+		}),
 		plugin.WithInit(func(ctx *cli.Context) error {
 			log.Println(consul_address)
 			token.InitConfig(consul_address, "micro", "config", "jwt-key", "key")
 			return nil
 		}),
 	))
+
 	plugin.Register(plugin.NewPlugin(
 		plugin.WithName("tracer"),
 		plugin.WithHandler(
@@ -82,17 +87,17 @@ func main() {
 	go http.ListenAndServe(net.JoinHostPort("", "81"), hystrixStreamHandler)
 
 	//consul
-	reg := consul.NewRegistry(func(op *registry.Options) {
-		op.Addrs = []string{
-			consul_address,
-		}
-	})
+	//reg := consul.NewRegistry(func(op *registry.Options) {
+	//	op.Addrs = []string{
+	//		consul_address,
+	//	}
+	//})
 
 	cmd.Init(
 		micro.Name(app_name),
 		micro.RegisterTTL(time.Second*15),
 		micro.RegisterInterval(time.Second*10),
-		micro.Registry(reg),
+		//micro.Registry(reg),
 		micro.Version("latest"),
 	)
 

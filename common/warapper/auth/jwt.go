@@ -16,6 +16,7 @@ func JWTAuthWrapper(token *token.Token) plugin.Handler {
 			// TODO 从配置中心动态获取白名单URL
 			if r.URL.Path == "/user/login" || r.URL.Path == "/user/register" || r.URL.Path == "/user/test" || r.URL.Path == "/metrics" {
 				log.Println("jwt path :", r.URL.Path)
+				r.Header.Set("X-Example-Username", "xx")
 				h.ServeHTTP(w, r)
 				return
 			}
