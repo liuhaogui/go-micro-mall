@@ -60,7 +60,7 @@ func main() {
 			token.InitConfig(consul_address, "micro", "config", "jwt-key", "key")
 		}),
 		//web.Registry(reg),
-		web.Address(":8081"),
+		web.Address(":9081"),
 	)
 
 	if err := service.Init(); err != nil {
