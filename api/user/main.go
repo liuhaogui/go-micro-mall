@@ -20,10 +20,12 @@ import (
 	"time"
 
 	"github.com/liuhaogui/go-micro-mall/common/token"
+	ocplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
 )
 
 const name = "go.micro.api.user"
 const consul_address = "127.0.0.1:8500"
+
 func main() {
 	// token
 	token := &token.Token{}
@@ -54,7 +56,7 @@ func main() {
 			token.InitConfig(consul_address, "micro", "config", "jwt-key", "key")
 		}),
 		web.Registry(reg),
-		web.Address(":8080"),
+		web.Address(":8081"),
 	)
 
 	if err := service.Init(); err != nil {
@@ -65,7 +67,7 @@ func main() {
 
 	sClient := hystrixplugin.NewClientWrapper()(service.Options().Service.Client())
 	sClient.Init(
-		// client.WrapCall(ocplugin.NewCallWrapper(t)),
+		client.WrapCall(ocplugin.NewCallWrapper(t)),
 		client.Retries(3),
 		client.Retry(func(ctx context.Context, req client.Request, retryCount int, err error) (bool, error) {
 			log.Log(req.Method(), retryCount, " client retry")
