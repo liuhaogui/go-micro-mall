@@ -7,26 +7,28 @@ import (
 	"github.com/liuhaogui/go-micro-mall/api/user/handler"
 	"github.com/liuhaogui/go-micro-mall/common/tracer"
 	"github.com/liuhaogui/go-micro-mall/common/warapper/tracer/opentracing/gin2micro"
-	"github.com/micro/go-micro"
 	"github.com/micro/cli"
 	"github.com/micro/go-micro/client"
+	"github.com/micro/go-micro/registry"
+	"github.com/micro/go-micro/registry/consul"
 	"github.com/micro/go-micro/util/log"
 
-	hystrixplugin "github.com/micro/go-plugins/wrapper/breaker/hystrix"
 	"github.com/micro/go-micro/service/grpc"
 	"github.com/micro/go-micro/web"
+	hystrixplugin "github.com/micro/go-plugins/wrapper/breaker/hystrix"
 	"github.com/opentracing/opentracing-go"
 	"time"
-
 
 	"github.com/liuhaogui/go-micro-mall/common/token"
 )
 
 const name = "go.micro.api.user"
-
+const consul_address = "127.0.0.1:8500"
 func main() {
+	// token
 	token := &token.Token{}
 
+	// tracer
 	gin2micro.SetSamplingFrequency(50)
 	t, io, err := tracer.NewTracer(name, "")
 	if err != nil {
@@ -35,21 +37,24 @@ func main() {
 	defer io.Close()
 	opentracing.SetGlobalTracer(t)
 
+	//consul
+	reg := consul.NewRegistry(func(op *registry.Options) {
+		op.Addrs = []string{
+			consul_address,
+		}
+	})
+
 	service := web.NewService(
 		web.Name(name),
 		web.Version("lastest"),
 		web.RegisterTTL(time.Second*15),
 		web.RegisterInterval(time.Second*10),
 		web.MicroService(grpc.NewService()),
-		web.Flags(cli.StringFlag{
-			Name:   "consul_address",
-			Usage:  "consul address for K/V",
-			EnvVar: "CONSUL_ADDRESS",
-			Value:  "127.0.0.1:8500",
-		}),
 		web.Action(func(ctx *cli.Context) {
-			token.InitConfig(ctx.String("consul_address"), "micro", "config", "jwt-key", "key")
+			token.InitConfig(consul_address, "micro", "config", "jwt-key", "key")
 		}),
+		web.Registry(reg),
+		web.Address(":8080"),
 	)
 
 	if err := service.Init(); err != nil {
@@ -66,11 +71,12 @@ func main() {
 			log.Log(req.Method(), retryCount, " client retry")
 			return true, nil
 		}),
+
 	)
 
-	pub := micro.NewPublisher("/test", sClient)
+	//pub := micro.NewPublisher("/test", sClient)
 
-	apiService := handler.New(sClient, pub, token)
+	apiService := handler.New(sClient, token)
 	router := gin.Default()
 	r := router.Group("/user")
 	r.Use(gin2micro.TracerWrapper)

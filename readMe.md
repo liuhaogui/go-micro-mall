@@ -20,3 +20,8 @@
     }
 }
 ```
+
+- 生成proto
+```
+protoc --proto_path=.:$GOPATH/src --go_out=. --micro_out=. user.proto
+```

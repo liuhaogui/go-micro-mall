@@ -23,8 +23,10 @@ func Handler(ctx context.Context, msg *example.Message) error {
 	return nil
 }
 
+var name = "go.micro.srv.hello"
+
 func main() {
-	t, io, err := tracer.NewTracer("go.micro.service.example", "")
+	t, io, err := tracer.NewTracer(name, "")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -40,7 +42,7 @@ func main() {
 
 	// New Service
 	service := micro.NewService(
-		micro.Name("go.micro.service.example"),
+		micro.Name(name),
 		micro.WrapHandler(ocplugin.NewHandlerWrapper(t)),
 		micro.RegisterTTL(time.Second*15),
 		micro.RegisterInterval(time.Second*10),
@@ -55,7 +57,7 @@ func main() {
 	example.RegisterExampleHandler(service.Server(), new(handler.Example))
 
 	// Register Struct as Subscriber
-	//micro.RegisterSubscriber("go.micro.service.example", service.Server(), new(subscriber.Example))
+	//micro.RegisterSubscriber("go.micro.srv.hello", service.Server(), new(subscriber.Example))
 
 	// Run service
 	if err := service.Run(); err != nil {

@@ -1,18 +1,16 @@
 package handler
 
 import (
-	"context"
+	//"context"
 	"errors"
 	"github.com/gin-gonic/gin"
+	"github.com/liuhaogui/go-micro-mall/common/token"
 	"github.com/liuhaogui/go-micro-mall/common/warapper/tracer/opentracing/gin2micro"
-	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/util/log"
-
 	"net/http"
-	"github.com/liuhaogui/go-micro-mall/common/token"
 
-	//helloS "github.com/liuhaogui/go-micro-mall/example/proto/example"
+	helloS "github.com/liuhaogui/go-micro-mall/example/proto/example"
 	userS "github.com/liuhaogui/go-micro-mall/user/proto/user"
 )
 
@@ -21,18 +19,18 @@ const name = "go.micro.api.user"
 // UserAPIService 服务
 type UserAPIService struct {
 	jwt    *token.Token
-	//helloC helloS.ExampleService
+	helloC helloS.ExampleService
 	userC  userS.UserService
-	pub    micro.Publisher
+	//pub    micro.Publisher
 }
 
 // New UserAPIService
-func New(client client.Client, pub micro.Publisher, token *token.Token) *UserAPIService {
+func New(client client.Client, token *token.Token) *UserAPIService {
 	return &UserAPIService{
 		jwt:    token,
-		//helloC: helloS.NewExampleService("", client),
+		helloC: helloS.NewExampleService("", client),
 		userC:  userS.NewUserService("", client),
-		pub:    pub,
+		//pub:    pub,
 	}
 }
 
@@ -45,15 +43,17 @@ func (s *UserAPIService) Anything(c *gin.Context) {
 		log.Log("get context err")
 	}
 
+	//serviceClient := helloS.NewExampleService("go.micro.srv.example", client.DefaultClient)
+	//res, err := serviceClient.Call(ctx, &helloS.Request{Name: "xuxu"})
 	res, err := s.helloC.Call(ctx, &helloS.Request{Name: "xuxu"})
 	if err != nil {
-		log.Log(err)
-		c.AbortWithError(http.StatusInternalServerError, err)
+		log.Log("call error : ",err)
+		//	c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
 	log.Log(res)
 
-	s.pub.Publish(context.TODO(), &helloS.Message{Say: "你好"})
+	//s.pub.Publish(context.TODO(), &helloS.Message{Say: "你好"})
 
 	// userres, err := s.userC.Ping(ctx, &userS.Request{})
 	// if err != nil {
@@ -69,12 +69,14 @@ func (s *UserAPIService) Anything(c *gin.Context) {
 }
 
 // Create 新建一个用户
-// {
-// 	"name":"xx",
-// 	"email": "123.@qq.com",
-// 	"tel":"tel1",
-// 	"password":"d"
-// }
+/**
+{
+	"name":"xx",
+	"email": "123.@qq.com",
+	"tel":"tel1",
+	"password":"d"
+}
+*/
 func (s *UserAPIService) Create(c *gin.Context) {
 
 	ctx, ok := gin2micro.ContextWithSpan(c)
@@ -94,6 +96,5 @@ func (s *UserAPIService) Create(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{})
+	c.JSON(http.StatusCreated, user)
 }
-
