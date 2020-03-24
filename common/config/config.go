@@ -20,6 +20,11 @@ type configurator struct {
 	appName string
 }
 
+type Configurator interface {
+	App(name string, config interface{}) (err error)
+	Path(path string, config interface{}) (err error)
+}
+
 func C() Configurator {
 	return c
 }
@@ -81,6 +86,18 @@ func (c *configurator) init(ops Options) (err error) {
 	inited = true
 	return
 }
+
+func (c *configurator) Path(path string, config interface{}) (err error) {
+	v := c.conf.Get(c.appName, path)
+	if v != nil {
+		err = v.Scan(config)
+	} else {
+		err = fmt.Errorf("[Path] 配置不存在，err：%s", path)
+	}
+
+	return
+}
+
 
 func Init(opts ...Option) {
 
