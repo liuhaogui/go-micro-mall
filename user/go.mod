@@ -15,8 +15,8 @@ require (
 	github.com/go-log/log v0.1.0
 	github.com/golang/protobuf v1.3.3
 	github.com/jinzhu/gorm v1.9.12
-	github.com/liuhaogui/go-micro-mall v0.0.0-20200323124405-d73228717069
-	github.com/liuhaogui/go-micro-mall/common v0.0.0-20200324183312-f65403567141 // indirect
+	github.com/liuhaogui/go-micro-mall v0.0.0-20200324183312-f65403567141
+	github.com/liuhaogui/go-micro-mall/common v0.0.0-20200324183312-f65403567141
 	github.com/micro/go-micro v1.18.0
 	github.com/micro/go-plugins/config/source/consul v0.0.0-20200119172437-4fe21aa238fd
 	github.com/opentracing/opentracing-go v1.1.0

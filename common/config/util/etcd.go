@@ -1,4 +1,4 @@
-package common
+package util
 
 // Etcd 配置
 type Etcd struct {
