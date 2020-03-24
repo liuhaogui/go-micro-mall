@@ -1,16 +1,13 @@
 package main
 
 import (
+	ph "github.com/afex/hystrix-go/hystrix"
 	"github.com/liuhaogui/go-micro-mall/common/token"
 	"github.com/liuhaogui/go-micro-mall/common/warapper/auth"
 	"github.com/liuhaogui/go-micro-mall/common/warapper/breaker/hystrix"
-	"github.com/micro/go-micro"
 	"log"
 	"net"
 	"net/http"
-	"time"
-
-	ph "github.com/afex/hystrix-go/hystrix"
 	//"github.com/liuhaogui/go-micro-mall/common/token"
 	"github.com/liuhaogui/go-micro-mall/common/tracer"
 	//"github.com/liuhaogui/go-micro-mall/common/warapper/auth"
@@ -25,8 +22,9 @@ import (
 	opentracing "github.com/opentracing/opentracing-go"
 )
 
-const app_name = "go.micro.api"
+const app_name = "API gateway"
 const consul_address = "127.0.0.1:8500"
+
 func init() {
 	token := &token.Token{}
 
@@ -44,8 +42,8 @@ func init() {
 			Value:  consul_address,
 		}),
 		plugin.WithInit(func(ctx *cli.Context) error {
-			log.Println(consul_address)
-			token.InitConfig(consul_address, "micro", "config", "jwt-key", "key")
+			log.Println(ctx.String("consul_address"))
+			token.InitConfig(ctx.String("consul_address"), "micro", "config", "jwt-key", "key")
 			return nil
 		}),
 	))
@@ -94,11 +92,11 @@ func main() {
 	//})
 
 	cmd.Init(
-		micro.Name(app_name),
-		micro.RegisterTTL(time.Second*15),
-		micro.RegisterInterval(time.Second*10),
+		//micro.Name(app_name),
+		//micro.RegisterTTL(time.Second*15),
+		//micro.RegisterInterval(time.Second*10),
 		//micro.Registry(reg),
-		micro.Version("latest"),
+		//micro.Version("latest"),
 	)
 
 

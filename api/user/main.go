@@ -21,7 +21,7 @@ import (
 	ocplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
 )
 
-const name = "go.micro.api.user"
+const name = "go.micro.mall.api.user"
 const consul_address = "127.0.0.1:8500"
 
 func main() {

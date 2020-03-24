@@ -1,13 +1,13 @@
 package stdhttp
 
 import (
+	status_code "github.com/liuhaogui/go-micro-mall/common/http"
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	"log"
 	"math/rand"
 	"net/http"
 	"time"
-	status_code "github.com/liuhaogui/go-micro-mall/common/http"
 )
 
 // sf sampling frequency

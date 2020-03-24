@@ -19,7 +19,7 @@ import (
 	db "github.com/liuhaogui/go-micro-mall/user/model"
 )
 
-const name = "go.micro.srv.user"
+const name = "go.micro.mall.srv.user"
 
 func main() {
 	// token

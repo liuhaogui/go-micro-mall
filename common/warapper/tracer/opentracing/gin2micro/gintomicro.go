@@ -2,7 +2,7 @@ package gin2micro
 
 import (
 	"context"
-	"github.com/opentracing/opentracing-go"
+	opentracing "github.com/opentracing/opentracing-go"
 	"math/rand"
 	"net/http"
 	"time"

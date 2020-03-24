@@ -27,6 +27,7 @@ consul agent -dev
 
 
 ### consul config
+ - 根路径：`micro/config`
 
 - jwt-key
 ```
