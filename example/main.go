@@ -21,7 +21,7 @@ func Handler(ctx context.Context, msg *example.Message) error {
 	return nil
 }
 
-var name = "go.micro.mall.srv.hello"
+var name = "go.micro.srv.hello"
 
 func main() {
 	t, io, err := tracer.NewTracer(name, "")
