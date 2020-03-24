@@ -8,3 +8,9 @@ replace (
 	github.com/micro/go-micro v1.18.0 => github.com/micro/go-micro v1.10.0
 	github.com/micro/go-plugins v1.5.1 => github.com/micro/go-plugins v1.2.0
 )
+
+require (
+	github.com/micro/go-micro v1.18.0 // indirect
+	github.com/micro/go-plugins v1.5.1 // indirect
+	google.golang.org/grpc v1.28.0 // indirect
+)

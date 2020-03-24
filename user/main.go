@@ -1,6 +1,7 @@
 package main
 
 import (
+	cfgUtil "github.com/liuhaogui/go-micro-mall/common/config/util"
 	"time"
 
 	"github.com/liuhaogui/go-micro-mall/user/handler"
@@ -16,10 +17,26 @@ import (
 	"github.com/liuhaogui/go-micro-mall/common/token"
 	"github.com/liuhaogui/go-micro-mall/common/tracer"
 
+	comCfg "github.com/liuhaogui/go-micro-mall/common/config"
 	db "github.com/liuhaogui/go-micro-mall/user/model"
 )
 
-const name = "go.micro.srv.user"
+type userCfg struct {
+	comCfg.AppCfg
+}
+
+const (
+	appName      = "user-srv"
+	appNameSpace = "go.micro.srv.user"
+)
+
+var (
+	appCfg  = &cfgUtil.AppCfg{}
+)
+
+func init()  {
+	appCfg = util.InitGetAppCfg(appName)
+}
 
 func main() {
 	// token
@@ -27,7 +44,7 @@ func main() {
 	var consulAddr string
 
 	// tracer
-	t, io, err := tracer.NewTracer(name, "localhost:6831")
+	t, io, err := tracer.NewTracer(appNameSpace, comCfg.Consul_address)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -42,7 +59,7 @@ func main() {
 
 	// New Service
 	service := grpc.NewService(
-		micro.Name(name),
+		micro.Name(appCfg.Name),
 		micro.Version("latest"),
 		micro.RegisterTTL(time.Second*15),
 		micro.RegisterInterval(time.Second*10),
@@ -51,11 +68,10 @@ func main() {
 			Name:   "consul_address",
 			Usage:  "consul address for K/V",
 			EnvVar: "CONSUL_ADDRESS",
-			Value:  "127.0.0.1:8500",
+			Value:  util.GetConsulAddress(appName),
 		}),
 		micro.Action(func(ctx *cli.Context) {
-			consulAddr = ctx.String("consul_address")
-			token.InitConfig(consulAddr, "micro", "config", "jwt-key", "key")
+			token.InitConfig(ctx.String("consul_address"), "micro", "config", "jwt-key", "key")
 		}),
 		//micro.Registry(reg),
 		micro.Address(":8091"),

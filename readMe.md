@@ -11,6 +11,7 @@
     - metrics
     - [x] 日志推送es
     - 健康检查
+    - [x] Swagger
 
 ### 相关组件运行
 - jaeger

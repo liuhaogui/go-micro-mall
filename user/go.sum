@@ -551,6 +551,8 @@ github.com/liquidweb/liquidweb-go v1.6.0/go.mod h1:UDcVnAMDkZxpw4Y7NOHkqoeiGacVL
 github.com/liuhaogui/go-micro-mall v0.0.0-20200317102548-9062f7d227d2 h1:uvbSUIADN6THg2YnK6w2W2ma7JlBB07sKvZev3qSuXY=
 github.com/liuhaogui/go-micro-mall v0.0.0-20200323042051-1919988536d2 h1:betTKSjC3lLXgEmJ3ZzT1Qnt6U0Ejd4VnADUzEhU0LI=
 github.com/liuhaogui/go-micro-mall v0.0.0-20200323042051-1919988536d2/go.mod h1:cUiLEXC5vUed98ecuvadqWldzzD342wkFuCFWV3AM6g=
+github.com/liuhaogui/go-micro-mall v0.0.0-20200324170335-7cf17df88cdf h1:TpLYJty2i6dsjOSAX/EcbNBOaQreC40U4hGWm5Vj/qs=
+github.com/liuhaogui/go-micro-mall/common v0.0.0-20200324170335-7cf17df88cdf h1:9Fzg7N2O7fWjx3i4FztfGFFZWJdmuoAzevdTCDEA8+Y=
 github.com/lucas-clemente/quic-go v0.7.1-0.20190710050138-1441923ab031/go.mod h1:lb5aAxL68VvhZ00e7yYuQVK/9FLggtYy4qo7oI5qzqA=
 github.com/lucas-clemente/quic-go v0.11.2/go.mod h1:PpMmPfPKO9nKJ/psF49ESTAGQSdfXxlg1otPbEB2nOw=
 github.com/lucas-clemente/quic-go v0.12.0 h1:TRbvZ6F++sofeGbh+Z2IIyIOhl8KyGnYuA06g2yrHdI=
