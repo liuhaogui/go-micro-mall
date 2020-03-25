@@ -26,7 +26,7 @@ type Service struct{}
 func main() {
 	defer func() {
 		if r := recover(); r != nil {
-			log.Info("[main] Recovered in f %v", r)
+			log.Infof("[main] Recovered in f %v", r)
 		}
 	}()
 
@@ -83,7 +83,7 @@ func loadAndWatchConfigFile() (err error) {
 				return
 			}
 
-			log.Info("[loadAndWatchConfigFile] 文件变动，%s", string(v.Bytes()))
+			log.Infof("[loadAndWatchConfigFile] 文件变动，%s", string(v.Bytes()))
 		}
 	}()
 
@@ -105,7 +105,7 @@ func (s Service) Watch(req *proto.WatchRequest, server proto.Source_WatchServer)
 		ChangeSet: getConfig(appName),
 	}
 	if err = server.Send(rsp); err != nil {
-		log.Info("[Watch] 侦听处理异常，%s", err)
+		log.Infof("[Watch] 侦听处理异常，%s", err)
 		return err
 	}
 
@@ -125,7 +125,7 @@ func parsePath(path string) (appName string) {
 func getConfig(appName string) *proto.ChangeSet {
 	bytes := config.Get(appName).Bytes()
 
-	log.Info("[getConfig] appName：%s", appName)
+	log.Infof("[getConfig] appName：%s", appName)
 	return &proto.ChangeSet{
 		Data:      bytes,
 		Checksum:  fmt.Sprintf("%x", md5.Sum(bytes)),

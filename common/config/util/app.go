@@ -36,7 +36,14 @@ func InitGetAppCfg(appName string) (cfg *AppCfg) {
 		panic(err)
 	}
 
-	log.Info("[initCfg] 配置，cfg：%v", cfg)
+	log.Infof("[initCfg] 配置，cfg：%v", cfg)
+
+	// log init
+	esCfg := GetEsCfg()
+	if esCfg.Enabled {
+		log.EsLogInit(appName, esCfg)
+	}
+
 	return
 }
 

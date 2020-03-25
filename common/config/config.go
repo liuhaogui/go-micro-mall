@@ -75,7 +75,7 @@ func (c *configurator) init(ops Options) (err error) {
 				log.Fatal(err)
 			}
 
-			log.Info("[init] 侦听配置变动: %v", string(v.Bytes()))
+			log.Infof("[init] 侦听配置变动: %v", string(v.Bytes()))
 		}
 	}()
 
