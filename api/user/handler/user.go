@@ -28,8 +28,8 @@ type UserAPIService struct {
 func New(client client.Client, token *token.Token) *UserAPIService {
 	return &UserAPIService{
 		jwt:    token,
-		helloC: helloS.NewExampleService("", client),
-		userC:  userS.NewUserService("", client),
+		helloC: helloS.NewExampleService("go.micro.srv.hello", client),
+		userC:  userS.NewUserService("go.micro.srv.user", client),
 		//pub:    pub,
 	}
 }

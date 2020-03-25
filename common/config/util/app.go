@@ -40,7 +40,6 @@ func InitGetAppCfg(appName string) (cfg *AppCfg) {
 	return
 }
 
-
 func GetConsulAddress() string {
 	consulCfg := &Etcd{}
 	err := config.C().App("consul", consulCfg)
@@ -51,14 +50,22 @@ func GetConsulAddress() string {
 	return fmt.Sprintf("%s:%d", consulCfg.Host, consulCfg.Port)
 }
 
-
-
 func GetJaegerAddress() string {
-	JaegerCfg := &Jaeger{}
-	err := config.C().App("jaeger", JaegerCfg)
+	jaegerCfg := &Jaeger{}
+	err := config.C().App("jaeger", jaegerCfg)
 	if err != nil {
 		panic(err)
 	}
 
-	return fmt.Sprintf("%s:%d", JaegerCfg.Host, JaegerCfg.Port)
+	return fmt.Sprintf("%s:%d", jaegerCfg.Host, jaegerCfg.Port)
+}
+
+func GetEsCfg() *ElasticSearch {
+	esCfg := &ElasticSearch{}
+	err := config.C().App("elasticsearch", esCfg)
+	if err != nil {
+		panic(err)
+	}
+
+	return esCfg
 }
