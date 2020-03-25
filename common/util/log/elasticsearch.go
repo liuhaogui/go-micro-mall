@@ -5,10 +5,11 @@ import (
 	"github.com/sirupsen/logrus"
 	"gopkg.in/olivere/elastic.v5"
 	elogrus "gopkg.in/sohlich/elogrus.v2"
+	cfgUtil "github.com/liuhaogui/go-micro-mall/common/config/util"
 	"time"
 )
 
-func EsLogInit(appname string, esCfg *ElasticSearch) {
+func EsLogInit(appname string, esCfg *cfgUtil.ElasticSearch) {
 	esUrl := fmt.Sprintf("%s://%s:%d", esCfg.Protocol, esCfg.Host, esCfg.Port)
 	client, err := elastic.NewClient(elastic.SetURL(esUrl))
 	if err != nil {
