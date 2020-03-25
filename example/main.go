@@ -13,7 +13,7 @@ import (
 	//"github.com/liuhaogui/go-micro-mall/example/subscriber"
 
 
-	example "github.com/liuhaogui/go-micro-mall/example/proto/example"
+	example "github.com/liuhaogui/go-micro-mall/example/proto/hello"
 	ocplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
 	"github.com/liuhaogui/go-micro-mall/common/tracer"
 	//"github.com/micro/cli"
