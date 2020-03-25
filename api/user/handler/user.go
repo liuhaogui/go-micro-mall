@@ -98,3 +98,26 @@ func (s *UserAPIService) Create(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, user)
 }
+
+
+func (s *UserAPIService) Login(c *gin.Context) {
+
+	ctx, ok := gin2micro.ContextWithSpan(c)
+	if ok == false {
+		log.Error("get context err")
+	}
+	var user userS.User
+
+	if err := c.ShouldBindJSON(&user); err != nil {
+		c.AbortWithError(http.StatusBadRequest, errors.New("JWT decode failed"))
+		return
+	}
+
+	token , err := s.userC.Auth(ctx, &user)
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+
+	c.JSON(http.StatusCreated, token)
+}

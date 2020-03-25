@@ -14,12 +14,12 @@ service UserService {
 
 // 用户信息
 message User {
-    string id = 1;
-    string name = 2;
-    string company = 3;
-	string email = 4;
-	string tel = 5;
-    string password = 6;
+    int64 id = 1;
+    string phone = 2;
+    string password = 3;
+	string salt = 4;
+	int64 created_unix = 5;
+    int64 updated_unix = 6;
 }
 
 message Request {

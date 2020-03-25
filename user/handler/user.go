@@ -2,12 +2,17 @@ package handler
 
 import (
 	"context"
+	"crypto/sha256"
+	"crypto/subtle"
 	"errors"
+	"fmt"
 	"github.com/liuhaogui/go-micro-mall/common/token"
 	"github.com/liuhaogui/go-micro-mall/common/util/log"
+	"github.com/liuhaogui/go-micro-mall/common/util/tool"
 	db "github.com/liuhaogui/go-micro-mall/user/model"
 	pb "github.com/liuhaogui/go-micro-mall/user/proto/user"
-	uuid "github.com/satori/go.uuid"
+	"golang.org/x/crypto/pbkdf2"
+
 	"time"
 )
 
@@ -23,18 +28,16 @@ func New(token *token.Token) *UserService {
 
 // Create 创建新User
 func (ser *UserService) Create(ctx context.Context, req *pb.User, resp *pb.Response) error {
-	if (req.Tel == "" && req.Email == "") || req.Name == "" || req.Password == "" {
+	if req.Phone == "" || req.Password == "" || len(req.Phone) > 11 {
 		return errors.New("incomplete information")
 	}
 
-	uuid, err := uuid.NewV4()
-	if err != nil {
-		log.Error("new uuid error!")
-		return err
-	}
+	req.CreatedUnix = time.Now().Unix()
+	req.UpdatedUnix = time.Now().Unix()
+	req.Salt = tool.RandomString(10)
 
-	req.Id = uuid.String()
-	err = db.CreateUser(req)
+	req.Password = EncodePasswd(req.Password, req.Salt)
+	err := db.CreateUser(req)
 	if err != nil {
 		log.Error(err.Error())
 		return err
@@ -50,18 +53,13 @@ func (ser *UserService) Delete(ctx context.Context, req *pb.User, resp *pb.Respo
 
 // Get 获取用户信息
 func (ser *UserService) Get(ctx context.Context, req *pb.User, resp *pb.User) (err error) {
-	if req.Id != "" {
+	if req.Id > 0 {
 		*resp, err = db.GetByID(req.Id)
 		if err != nil {
 			return err
 		}
-	} else if req.Tel != "" {
-		*resp, err = db.GetByTel(req.Tel)
-		if err != nil {
-			return err
-		}
-	} else if req.Email != "" {
-		*resp, err = db.GetByEmail(req.Email)
+	} else if len(req.Phone) > 1 {
+		*resp, err = db.GetByTel(req.Phone)
 		if err != nil {
 			return err
 		}
@@ -79,7 +77,7 @@ func (ser *UserService) GetAll(ctx context.Context, req *pb.Request, resp *pb.Us
 
 // UpdateInfo 更新用户信息
 func (ser *UserService) UpdateInfo(ctx context.Context, req *pb.User, resp *pb.Response) error {
-	if req.Id == "" {
+	if req.Id < 1 || len(req.Phone) < 1 {
 		return errors.New("Illegal user ID")
 	}
 	return db.UpdateUserInfo(req)
@@ -91,24 +89,20 @@ func (ser *UserService) Auth(ctx context.Context, req *pb.User, resp *pb.Token) 
 
 	var user pb.User
 	var err error
-	if req.Tel != "" {
-		user, err = db.GetByTel(req.Tel)
-		if err != nil {
-			return err
-		}
-	} else if req.Email != "" {
-		user, err = db.GetByEmail(req.Email)
+	if len(req.Phone) > 0 {
+		user, err = db.GetByTel(req.Phone)
 		if err != nil {
 			return err
 		}
 	} else {
-		return errors.New("tel/email cannot be empty")
+		return errors.New("phone cannot be empty")
 	}
 
-	if req.Password == user.Password {
+	inputPasswd := EncodePasswd(req.Password, user.Salt)
+	if ValidatePassword(user.Password, inputPasswd) {
 		var tokenStr string
 		expireTime := time.Now().Add(time.Hour * 24).Unix() // 1天后过期
-		tokenStr, err = ser.token.Encode(issuer, user.Name, expireTime)
+		tokenStr, err = ser.token.Encode(issuer, user.Phone, expireTime)
 		if err != nil {
 			return err
 		}
@@ -122,4 +116,15 @@ func (ser *UserService) Auth(ctx context.Context, req *pb.User, resp *pb.Token) 
 func (ser *UserService) Ping(ctx context.Context, req *pb.Request, resp *pb.Response) error {
 	log.Info("Received User.Ping request")
 	return nil
+}
+
+// EncodePasswd encodes password to safe format.
+func EncodePasswd(passwd string, salt string) string {
+	newPasswd := pbkdf2.Key([]byte(passwd), []byte(salt), 10000, 50, sha256.New)
+	return fmt.Sprintf("%x", newPasswd)
+}
+
+// ValidatePassword checks if given password matches the one belongs to the user.
+func ValidatePassword(dbPasswd string, inputPasswd string) bool {
+	return subtle.ConstantTimeCompare([]byte(dbPasswd), []byte(inputPasswd)) == 1
 }

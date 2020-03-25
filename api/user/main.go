@@ -88,6 +88,7 @@ func main() {
 	r.Use(gin2micro.TracerWrapper)
 	r.GET("/test", apiService.Anything)
 	r.POST("/register", apiService.Create)
+	r.POST("/login", apiService.Login)
 
 	service.Handle("/", router)
 

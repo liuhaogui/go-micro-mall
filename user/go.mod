@@ -20,6 +20,7 @@ require (
 	github.com/micro/go-plugins/config/source/consul v0.0.0-20200119172437-4fe21aa238fd
 	github.com/opentracing/opentracing-go v1.1.0
 	github.com/satori/go.uuid v1.2.1-0.20181028125025-b2ce2384e17b
+	golang.org/x/crypto v0.0.0-20191205180655-e7c4368fe9dd
 	gopkg.in/olivere/elastic.v5 v5.0.84 // indirect
 	gopkg.in/sohlich/elogrus.v2 v2.0.2 // indirect
 )

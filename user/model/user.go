@@ -43,8 +43,7 @@ func Init(address string) {
 	}
 
 	db.AutoMigrate(&pb.User{})
-	db.Model(&pb.User{}).AddUniqueIndex("uIndex_email", "email")
-	db.Model(&pb.User{}).AddUniqueIndex("uIndex_tel", "tel")
+	db.Model(&pb.User{}).AddUniqueIndex("uIndex_phone", "phone")
 }
 
 // CreateUser 在数据库中创建一个用户
@@ -63,23 +62,16 @@ func UpdateUserInfo(user *pb.User) error {
 }
 
 // GetByID 通过id取用户信息
-func GetByID(id string) (pb.User, error) {
+func GetByID(id int64) (pb.User, error) {
 	var user pb.User
 	err := db.Where("id = ?", id).Find(&user).Error
 	return user, err
 }
 
-// GetByTel 通过电话获取用户信息
-func GetByTel(tel string) (pb.User, error) {
+// GetByPhone 通过电话获取用户信息
+func GetByTel(phone string) (pb.User, error) {
 	var user pb.User
-	err := db.Where("tel = ?", tel).Find(&user).Error
-	return user, err
-}
-
-// GetByEmail 通过邮箱获取用户信息
-func GetByEmail(email string) (pb.User, error) {
-	var user pb.User
-	err := db.Where("email = ?", email).Find(&user).Error
+	err := db.Where("phone = ?", phone).Find(&user).Error
 	return user, err
 }
 
