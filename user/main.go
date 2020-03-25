@@ -10,7 +10,7 @@ import (
 	"github.com/micro/cli"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/service/grpc"
-	"github.com/micro/go-micro/util/log"
+	"github.com/liuhaogui/go-micro-mall/common/util/log"
 	ocplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
 	opentracing "github.com/opentracing/opentracing-go"
 

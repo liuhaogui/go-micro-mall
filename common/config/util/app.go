@@ -8,7 +8,7 @@ import (
 	"strconv"
 
 	comCfg "github.com/liuhaogui/go-micro-mall/common/config"
-	"github.com/micro/go-micro/util/log"
+	"github.com/liuhaogui/go-micro-mall/common/util/log"
 )
 
 type AppCfg struct {
@@ -36,7 +36,7 @@ func InitGetAppCfg(appName string) (cfg *AppCfg) {
 		panic(err)
 	}
 
-	log.Logf("[initCfg] 配置，cfg：%v", cfg)
+	log.Info("[initCfg] 配置，cfg：%v", cfg)
 	return
 }
 

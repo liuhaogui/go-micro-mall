@@ -10,7 +10,7 @@ import (
 	"github.com/liuhaogui/go-micro-mall/common/warapper/tracer/opentracing/gin2micro"
 	"github.com/micro/cli"
 	"github.com/micro/go-micro/client"
-	"github.com/micro/go-micro/util/log"
+	"github.com/liuhaogui/go-micro-mall/common/util/log"
 
 	"github.com/micro/go-micro/service/grpc"
 	"github.com/micro/go-micro/web"
@@ -74,7 +74,7 @@ func main() {
 		client.WrapCall(ocplugin.NewCallWrapper(t)),
 		client.Retries(3),
 		client.Retry(func(ctx context.Context, req client.Request, retryCount int, err error) (bool, error) {
-			log.Log(req.Method(), retryCount, " client retry")
+			log.Info(req.Method(), retryCount, " client retry")
 			return true, nil
 		}),
 

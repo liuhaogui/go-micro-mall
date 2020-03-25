@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-log/log"
+	"github.com/liuhaogui/go-micro-mall/common/util/log"
 	"github.com/micro/go-micro/metadata"
 
 	"github.com/opentracing/opentracing-go/ext"
@@ -46,7 +46,7 @@ func TracerWrapper(c *gin.Context) {
 	if err := tracer.Inject(sp.Context(),
 		opentracing.TextMap,
 		opentracing.TextMapCarrier(md)); err != nil {
-		log.Log(err)
+		log.Info(err)
 	}
 
 	ctx := context.TODO()

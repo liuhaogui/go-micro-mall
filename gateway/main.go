@@ -5,7 +5,7 @@ import (
 	"github.com/liuhaogui/go-micro-mall/common/token"
 	"github.com/liuhaogui/go-micro-mall/common/warapper/auth"
 	"github.com/liuhaogui/go-micro-mall/common/warapper/breaker/hystrix"
-	"log"
+	"github.com/liuhaogui/go-micro-mall/common/util/log"
 	"net"
 	"net/http"
 	//"github.com/liuhaogui/go-micro-mall/common/token"
@@ -42,7 +42,7 @@ func init() {
 			Value:  consul_address,
 		}),
 		plugin.WithInit(func(ctx *cli.Context) error {
-			log.Println(ctx.String("consul_address"))
+			log.Info(ctx.String("consul_address"))
 			token.InitConfig(ctx.String("consul_address"), "micro", "config", "jwt-key", "key")
 			return nil
 		}),
@@ -67,8 +67,6 @@ func init() {
 		),
 	))
 }
-
-
 
 func main() {
 	stdhttp.SetSamplingFrequency(50)
@@ -98,7 +96,5 @@ func main() {
 		//micro.Registry(reg),
 		//micro.Version("latest"),
 	)
-
-
 
 }

@@ -4,11 +4,11 @@ import (
 	"context"
 	"errors"
 	"github.com/liuhaogui/go-micro-mall/common/token"
+	"github.com/liuhaogui/go-micro-mall/common/util/log"
 	db "github.com/liuhaogui/go-micro-mall/user/model"
 	pb "github.com/liuhaogui/go-micro-mall/user/proto/user"
-	"github.com/micro/go-micro/util/log"
-	"time"
 	uuid "github.com/satori/go.uuid"
+	"time"
 )
 
 const issuer = "go.micro.srv.auth"
@@ -29,14 +29,14 @@ func (ser *UserService) Create(ctx context.Context, req *pb.User, resp *pb.Respo
 
 	uuid, err := uuid.NewV4()
 	if err != nil {
-		log.Log("new uuid error!")
+		log.Error("new uuid error!")
 		return err
 	}
 
 	req.Id = uuid.String()
 	err = db.CreateUser(req)
 	if err != nil {
-		log.Log(err.Error())
+		log.Error(err.Error())
 		return err
 	}
 
@@ -120,6 +120,6 @@ func (ser *UserService) Auth(ctx context.Context, req *pb.User, resp *pb.Token) 
 
 // Ping test
 func (ser *UserService) Ping(ctx context.Context, req *pb.Request, resp *pb.Response) error {
-	log.Log("Received User.Ping request")
+	log.Info("Received User.Ping request")
 	return nil
 }

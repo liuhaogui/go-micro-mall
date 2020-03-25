@@ -4,7 +4,7 @@ import (
 	status_code "github.com/liuhaogui/go-micro-mall/common/http"
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
-	"log"
+	"github.com/liuhaogui/go-micro-mall/common/util/log"
 	"math/rand"
 	"net/http"
 	"time"
@@ -34,7 +34,7 @@ func TracerWrapper(h http.Handler) http.Handler {
 			sp.Context(),
 			opentracing.HTTPHeaders,
 			opentracing.HTTPHeadersCarrier(r.Header)); err != nil {
-			log.Println(err)
+			log.Error(err)
 		}
 
 		sct := &status_code.StatusCodeTracker{ResponseWriter: w, Status: http.StatusOK}

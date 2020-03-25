@@ -4,9 +4,9 @@ import (
 	"context"
 	"crypto/md5"
 	"fmt"
+	"github.com/liuhaogui/go-micro-mall/common/util/log"
 	"github.com/micro/go-micro/config"
 	"github.com/micro/go-micro/config/source/file"
-	"github.com/micro/go-micro/util/log"
 	proto "github.com/micro/go-plugins/config/source/grpc/proto"
 	grpc2 "google.golang.org/grpc"
 	"net"
@@ -26,7 +26,7 @@ type Service struct{}
 func main() {
 	defer func() {
 		if r := recover(); r != nil {
-			log.Logf("[main] Recovered in f %v", r)
+			log.Info("[main] Recovered in f %v", r)
 		}
 	}()
 
@@ -42,7 +42,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Logf("Config Server started")
+	log.Info("Config Server started")
 
 	// 启动
 	err = service.Serve(ts)
@@ -83,7 +83,7 @@ func loadAndWatchConfigFile() (err error) {
 				return
 			}
 
-			log.Logf("[loadAndWatchConfigFile] 文件变动，%s", string(v.Bytes()))
+			log.Info("[loadAndWatchConfigFile] 文件变动，%s", string(v.Bytes()))
 		}
 	}()
 
@@ -105,7 +105,7 @@ func (s Service) Watch(req *proto.WatchRequest, server proto.Source_WatchServer)
 		ChangeSet: getConfig(appName),
 	}
 	if err = server.Send(rsp); err != nil {
-		log.Logf("[Watch] 侦听处理异常，%s", err)
+		log.Info("[Watch] 侦听处理异常，%s", err)
 		return err
 	}
 
@@ -122,11 +122,10 @@ func parsePath(path string) (appName string) {
 	return paths[0]
 }
 
-
 func getConfig(appName string) *proto.ChangeSet {
 	bytes := config.Get(appName).Bytes()
 
-	log.Logf("[getConfig] appName：%s", appName)
+	log.Info("[getConfig] appName：%s", appName)
 	return &proto.ChangeSet{
 		Data:      bytes,
 		Checksum:  fmt.Sprintf("%x", md5.Sum(bytes)),

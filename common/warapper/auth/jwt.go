@@ -3,7 +3,7 @@ package auth
 import (
 	"github.com/liuhaogui/go-micro-mall/common/token"
 	"github.com/micro/micro/plugin"
-	"log"
+	"github.com/liuhaogui/go-micro-mall/common/util/log"
 	"net/http"
 )
 
@@ -11,7 +11,7 @@ import (
 func JWTAuthWrapper(token *token.Token) plugin.Handler {
 	return func(h http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			log.Println("auth plugin received: " + r.URL.Path)
+			log.Info("auth plugin received: " + r.URL.Path)
 			// TODO 从配置中心动态获取白名单URL
 			if r.URL.Path == "/user/login" || r.URL.Path == "/user/register" || r.URL.Path == "/user/test" || r.URL.Path == "/metrics" {
 				h.ServeHTTP(w, r)
@@ -26,7 +26,7 @@ func JWTAuthWrapper(token *token.Token) plugin.Handler {
 				return
 			}
 
-			log.Println("User Name : ", userFromToken.UserName)
+			log.Info("User Name : ", userFromToken.UserName)
 			r.Header.Set("X-Example-Username", userFromToken.UserName)
 			h.ServeHTTP(w, r)
 		})

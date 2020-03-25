@@ -12,7 +12,7 @@ require (
 	github.com/afex/hystrix-go v0.0.0-20180502004556-fa1af6a1f4f5
 	github.com/gin-gonic/gin v1.6.1
 	github.com/liuhaogui/go-micro-mall v0.0.1
-	github.com/liuhaogui/go-micro-mall/common v0.0.0-20200325022851-7c5301848bca
+	github.com/liuhaogui/go-micro-mall/common v0.0.0-20200325054819-642eaddd7d6c
 	github.com/liuhaogui/go-micro-mall/user v0.0.0-20200323131939-9a71bea8fde9
 	github.com/micro/cli v0.2.0
 	github.com/micro/go-micro v1.18.0

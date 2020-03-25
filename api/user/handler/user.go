@@ -5,9 +5,9 @@ import (
 	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/liuhaogui/go-micro-mall/common/token"
+	"github.com/liuhaogui/go-micro-mall/common/util/log"
 	"github.com/liuhaogui/go-micro-mall/common/warapper/tracer/opentracing/gin2micro"
 	"github.com/micro/go-micro/client"
-	"github.com/micro/go-micro/util/log"
 	"net/http"
 
 	helloS "github.com/liuhaogui/go-micro-mall/hello/proto/hello"
@@ -36,32 +36,32 @@ func New(client client.Client, token *token.Token) *UserAPIService {
 
 // Anything 测试demo，调用hello服务和user两个服务
 func (s *UserAPIService) Anything(c *gin.Context) {
-	log.Log("Received Say.Anything API request")
+	log.Info("Received Say.Anything API request")
 
 	ctx, ok := gin2micro.ContextWithSpan(c)
 	if ok == false {
-		log.Log("get context err")
+		log.Error("get context err")
 	}
 
 	//serviceClient := helloS.NewExampleService("go.micro.srv.example", client.DefaultClient)
 	//res, err := serviceClient.Call(ctx, &helloS.Request{Name: "xuxu"})
 	res, err := s.helloC.Call(ctx, &helloS.Request{Name: "xuxu"})
 	if err != nil {
-		log.Log("call error : ", err)
+		log.Error("call error : ", err)
 		//	c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
-	log.Log(res)
+	log.Info(res)
 
 	//s.pub.Publish(context.TODO(), &helloS.Message{Say: "你好"})
 
 	// userres, err := s.userC.Ping(ctx, &userS.Request{})
 	// if err != nil {
-	// 	log.Log(err)
+	// 	log.Error(err)
 	// 	c.AbortWithError(http.StatusInternalServerError, err)
 	// 	return
 	// }
-	// log.Log(userres)
+	// log.Info(userres)
 
 	c.JSON(http.StatusOK, map[string]string{
 		"message": "Hi, this is the Greeter API",
@@ -81,7 +81,7 @@ func (s *UserAPIService) Create(c *gin.Context) {
 
 	ctx, ok := gin2micro.ContextWithSpan(c)
 	if ok == false {
-		log.Log("get context err")
+		log.Error("get context err")
 	}
 	var user userS.User
 

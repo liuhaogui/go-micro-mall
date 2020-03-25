@@ -10,11 +10,8 @@ replace (
 )
 
 require (
-	github.com/afex/hystrix-go v0.0.0-20180502004556-fa1af6a1f4f5
-	github.com/gin-gonic/gin v1.6.0
 	github.com/golang/protobuf v1.3.3
-	github.com/liuhaogui/go-micro-mall/common v0.0.0-20200325022851-7c5301848bca
-	github.com/liuhaogui/go-micro-mall/user v0.0.0-20200323042051-1919988536d2
+	github.com/liuhaogui/go-micro-mall/common v0.0.0-20200325054819-642eaddd7d6c
 	github.com/micro/cli v0.2.0
 	github.com/micro/go-micro v1.18.0
 	github.com/micro/go-plugins v1.5.1

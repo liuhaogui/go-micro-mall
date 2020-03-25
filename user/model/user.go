@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/liuhaogui/go-micro-mall/common/util/log"
 	pb "github.com/liuhaogui/go-micro-mall/user/proto/user"
 	config "github.com/micro/go-micro/config"
-	"github.com/micro/go-micro/util/log"
 	"github.com/micro/go-plugins/config/source/consul"
 )
 
@@ -35,7 +35,7 @@ func Init(address string) {
 		log.Fatal(err)
 	}
 
-	log.Log(v)
+	log.Info(v)
 	db, err = gorm.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local",
 		v.UserName, v.UserPassword, v.Address, v.Port, v.DbName))
 	if err != nil {

@@ -3,26 +3,24 @@ package main
 import (
 	"context"
 
+	"github.com/liuhaogui/go-micro-mall/common/util/log"
 	"github.com/micro/cli"
 	"github.com/micro/go-micro"
-	//"github.com/micro/go-micro/util/log"
-	"github.com/liuhaogui/go-micro-mall/common/util/log"
 	"github.com/opentracing/opentracing-go"
 	"time"
 
 	"github.com/liuhaogui/go-micro-mall/hello/handler"
 	//"github.com/liuhaogui/go-micro-mall/hello/subscriber"
 
-
+	"github.com/liuhaogui/go-micro-mall/common/tracer"
 	example "github.com/liuhaogui/go-micro-mall/hello/proto/hello"
 	ocplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
-	"github.com/liuhaogui/go-micro-mall/common/tracer"
 	//"github.com/micro/cli"
 	cfgUtil "github.com/liuhaogui/go-micro-mall/common/config/util"
 )
 
 func Handler(ctx context.Context, msg *example.Message) error {
-	log.Log("Function Received message: ", msg.Say)
+	log.Info("Function Received message: ", msg.Say)
 	return nil
 }
 
@@ -39,15 +37,13 @@ func init() {
 }
 
 func main() {
-	log.Info("start hello srv")
-	t, io, err := tracer.NewTracer(appCfg.Name,  cfgUtil.GetJaegerAddress())
+	t, io, err := tracer.NewTracer(appCfg.Name, cfgUtil.GetJaegerAddress())
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer io.Close()
 	opentracing.SetGlobalTracer(t)
 
-	log.Info("cfgUtil.GetConsulAddress() : ",cfgUtil.GetConsulAddress())
 	// New Service
 	service := micro.NewService(
 		micro.Name(appCfg.Name),

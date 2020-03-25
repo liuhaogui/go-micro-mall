@@ -5,7 +5,7 @@ import (
 	config "github.com/micro/go-micro/config"
 	"github.com/micro/go-micro/config/source/consul"
 
-	"log"
+	"github.com/liuhaogui/go-micro-mall/common/util/log"
 	"sync"
 	"time"
 )
@@ -56,7 +56,7 @@ func (srv *Token) InitConfig(address string, path ...string) {
 	}
 
 	srv.put(value)
-	log.Println("JWT privateKey:", string(srv.get()))
+	log.Info("JWT privateKey:", string(srv.get()))
 	srv.enableAutoUpdate(path...)
 }
 
@@ -65,16 +65,16 @@ func (srv *Token) enableAutoUpdate(path ...string) {
 		for {
 			w, err := srv.conf.Watch(path...)
 			if err != nil {
-				log.Println(err)
+				log.Error(err)
 			}
 			v, err := w.Next()
 			if err != nil {
-				log.Println(err)
+				log.Error(err)
 			}
 
 			value := v.Bytes()
 			srv.put(value)
-			log.Println("New JWT privateKey:", string(srv.get()))
+			log.Info("New JWT privateKey:", string(srv.get()))
 		}
 	}()
 }

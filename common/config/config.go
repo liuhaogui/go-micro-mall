@@ -2,8 +2,8 @@ package config
 
 import (
 	"fmt"
+	"github.com/liuhaogui/go-micro-mall/common/util/log"
 	"github.com/micro/go-micro/config"
-	"github.com/micro/go-micro/util/log"
 	"sync"
 )
 
@@ -41,15 +41,12 @@ func (c *configurator) App(name string, config interface{}) (err error) {
 	return
 }
 
-
-
-
 func (c *configurator) init(ops Options) (err error) {
 	m.Lock()
 	defer m.Unlock()
 
 	if inited {
-		log.Logf("[init] 配置已经初始化过")
+		log.Info("[init] 配置已经初始化过")
 		return
 	}
 
@@ -64,7 +61,7 @@ func (c *configurator) init(ops Options) (err error) {
 
 	go func() {
 
-		log.Logf("[init] 侦听配置变动 ...")
+		log.Info("[init] 侦听配置变动 ...")
 
 		// 开始侦听变动事件
 		watcher, err := c.conf.Watch()
@@ -78,7 +75,7 @@ func (c *configurator) init(ops Options) (err error) {
 				log.Fatal(err)
 			}
 
-			log.Logf("[init] 侦听配置变动: %v", string(v.Bytes()))
+			log.Info("[init] 侦听配置变动: %v", string(v.Bytes()))
 		}
 	}()
 
@@ -97,7 +94,6 @@ func (c *configurator) Path(path string, config interface{}) (err error) {
 
 	return
 }
-
 
 func Init(opts ...Option) {
 
