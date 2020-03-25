@@ -16,6 +16,12 @@ import (
 
 const name = "go.micro.api.user"
 
+type Resp struct {
+	Error   string `json:"error"`
+	Success bool   `json:"success"`
+	Msg     string `json:"message"`
+}
+
 // UserAPIService 服务
 type UserAPIService struct {
 	jwt    *token.Token
@@ -90,15 +96,16 @@ func (s *UserAPIService) Create(c *gin.Context) {
 		return
 	}
 
-	_, err := s.userC.Create(ctx, &user)
+	resp, err := s.userC.Create(ctx, &user)
 	if err != nil {
-		c.AbortWithError(http.StatusInternalServerError, err)
+		c.Abort()
+		log.Infof("error : %s  , resp : %s ", err, resp)
+		c.JSON(http.StatusBadRequest, err)
 		return
 	}
-
-	c.JSON(http.StatusCreated, user)
+	r := Resp{Success: true, Error: "", Msg: "success"}
+	c.JSON(http.StatusCreated, r)
 }
-
 
 func (s *UserAPIService) Login(c *gin.Context) {
 
@@ -113,7 +120,7 @@ func (s *UserAPIService) Login(c *gin.Context) {
 		return
 	}
 
-	token , err := s.userC.Auth(ctx, &user)
+	token, err := s.userC.Auth(ctx, &user)
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return

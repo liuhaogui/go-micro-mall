@@ -28,16 +28,26 @@ func New(token *token.Token) *UserService {
 
 // Create 创建新User
 func (ser *UserService) Create(ctx context.Context, req *pb.User, resp *pb.Response) error {
+	var err error
+	log.Info(req.Phone, "   ", req.Password)
 	if req.Phone == "" || req.Password == "" || len(req.Phone) > 11 {
 		return errors.New("incomplete information")
 	}
 
+	// 重复检查
+	if u, err := db.GetByTel(req.Phone); err != nil && u.Id > 0 {
+		return errors.New("User name already exists.")
+	}
+
 	req.CreatedUnix = time.Now().Unix()
 	req.UpdatedUnix = time.Now().Unix()
-	req.Salt = tool.RandomString(10)
+	req.Salt, err = tool.RandomString(10)
+	if err != nil {
+		log.Error("server error, plase retry later.")
+	}
 
 	req.Password = EncodePasswd(req.Password, req.Salt)
-	err := db.CreateUser(req)
+	err = db.CreateUser(req)
 	if err != nil {
 		log.Error(err.Error())
 		return err
@@ -110,6 +120,15 @@ func (ser *UserService) Auth(ctx context.Context, req *pb.User, resp *pb.Token) 
 		return nil
 	}
 	return errors.New("Incorrect account or password")
+}
+
+func (ser *UserService) GenToken(user *pb.User) (token string, err error) {
+	expireTime := time.Now().Add(time.Hour * 24).Unix()
+	token, err = ser.token.Encode(issuer, user.Phone, expireTime)
+	if err != nil {
+		return "", err
+	}
+	return token, nil
 }
 
 // Ping test

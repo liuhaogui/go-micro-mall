@@ -9,7 +9,7 @@
     - 链路追踪
     - jwt
     - metrics
-    - [x] 日志推送es
+    - 日志推送 elasticsearch
     - [x] 健康检查
     - [x] Swagger
 
