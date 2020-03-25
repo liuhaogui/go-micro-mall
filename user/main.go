@@ -21,21 +21,20 @@ import (
 )
 
 const (
-	appName      = "user-srv"
+	appName = "user-srv"
 )
 
 var (
-	appCfg  = &cfgUtil.AppCfg{}
+	appCfg = &cfgUtil.AppCfg{}
 )
 
-func init()  {
+func init() {
 	appCfg = cfgUtil.InitGetAppCfg(appName)
 }
 
 func main() {
 	// token
 	token := &token.Token{}
-	var consulAddr string
 
 	// tracer
 	t, io, err := tracer.NewTracer(appCfg.Name, cfgUtil.GetJaegerAddress())
@@ -44,12 +43,6 @@ func main() {
 	}
 	defer io.Close()
 	opentracing.SetGlobalTracer(t)
-
-	//reg := consul.NewRegistry(func(op *registry.Options) {
-	//	op.Addrs = []string{
-	//		"127.0.0.1:8500",
-	//	}
-	//})
 
 	// New Service
 	service := grpc.NewService(
@@ -67,13 +60,12 @@ func main() {
 		micro.Action(func(ctx *cli.Context) {
 			token.InitConfig(ctx.String("consul_address"), "micro", "config", "jwt-key", "key")
 		}),
-		//micro.Registry(reg),
 		micro.Address(appCfg.Addr()),
 	)
 
 	// Initialise service
 	service.Init()
-	db.Init(consulAddr)
+	db.Init(cfgUtil.GetConsulAddress())
 
 	// Register Handler
 	user.RegisterUserServiceHandler(service.Server(), handler.New(token))

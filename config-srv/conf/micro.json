@@ -12,7 +12,7 @@
       },
       "hello-srv":{
         "name":"go.micro.srv.hello",
-        "address": "127.0.0.1",
+        "address": "localhost",
         "port": 9092
       },
       "etcd":{
@@ -28,7 +28,7 @@
       "jaeger" : {
         "enabled": true,
         "host": "localhost",
-        "posrt": "6831"
+        "port": 6831
       },
       "db":{
           "mysql":{

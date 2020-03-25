@@ -499,8 +499,12 @@ github.com/liuhaogui/go-micro-mall v0.0.0-20200323131939-9a71bea8fde9 h1:OzsDrVw
 github.com/liuhaogui/go-micro-mall v0.0.0-20200323131939-9a71bea8fde9/go.mod h1:ldjdDvHioRijvCinv0/JtAvcmVc9786SXJ2mJ/n1fnQ=
 github.com/liuhaogui/go-micro-mall v0.0.0-20200324192941-f02fb0349d0b h1:RNQafWCLm9zKSxsVoVUu98gUpdm0aaHMzCldhLkzhUI=
 github.com/liuhaogui/go-micro-mall v0.0.0-20200324192941-f02fb0349d0b/go.mod h1:AQnfyL5RS/t16TBCKdPreWaEEagiFsQZTd6j1JpL8Es=
+github.com/liuhaogui/go-micro-mall v0.0.0-20200325022851-7c5301848bca h1:G2t6db75BUJm1EVwYxU7g4bjD/FtggmddduN+s2w04c=
+github.com/liuhaogui/go-micro-mall v0.0.0-20200325022851-7c5301848bca/go.mod h1:U6TAiZn+z26j19m3QRJX/5fNaaKYhgW7bKGQNxoLzj0=
 github.com/liuhaogui/go-micro-mall/common v0.0.0-20200324192941-f02fb0349d0b h1:ZQao6yhiQ8A8x/gnbH7zVtBrAhHOWhPugvKRzud4paQ=
 github.com/liuhaogui/go-micro-mall/common v0.0.0-20200324192941-f02fb0349d0b/go.mod h1:CQfh3gT/f88uh1MzysVk9Mhb66RpLrcDmf4RZTGBo5k=
+github.com/liuhaogui/go-micro-mall/common v0.0.0-20200325022851-7c5301848bca h1:nfXFIVMvgxr89epZQqxpyUWP4qmOWo710lPk2t4qXVo=
+github.com/liuhaogui/go-micro-mall/common v0.0.0-20200325022851-7c5301848bca/go.mod h1:CQfh3gT/f88uh1MzysVk9Mhb66RpLrcDmf4RZTGBo5k=
 github.com/liuhaogui/go-micro-mall/example v0.0.0-20200323131939-9a71bea8fde9 h1:ax0/OslkerW7s63lvR/t0oH6zjTXFhm5+VUg2pN2Ns4=
 github.com/liuhaogui/go-micro-mall/example v0.0.0-20200323131939-9a71bea8fde9/go.mod h1:7GAjP1pwUTU8bZG/qsCmC8P2DjbRuhpHxAshaQyD7ow=
 github.com/liuhaogui/go-micro-mall/user v0.0.0-20200323042051-1919988536d2/go.mod h1:/RTnnjgvMSkjbtak5cq3uiEmmGlArjaGD/TdRg+XtPY=

@@ -57,7 +57,6 @@ func main() {
 		}),
 		micro.RegisterTTL(time.Second*15),
 		micro.RegisterInterval(time.Second*10),
-		//micro.Registry(reg),
 		micro.Address(appCfg.Addr()),
 		micro.Version("latest"),
 	)

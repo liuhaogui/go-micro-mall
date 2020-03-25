@@ -475,6 +475,8 @@ github.com/liuhaogui/go-micro-mall v0.0.0-20200323124405-d73228717069/go.mod h1:
 github.com/liuhaogui/go-micro-mall v0.0.0-20200324170335-7cf17df88cdf h1:TpLYJty2i6dsjOSAX/EcbNBOaQreC40U4hGWm5Vj/qs=
 github.com/liuhaogui/go-micro-mall v0.0.0-20200324183312-f65403567141 h1:A5sVOVhZ3DBepCA1wF4GfEc6iS2jlvIkqkg6DmuXYCU=
 github.com/liuhaogui/go-micro-mall v0.0.0-20200324183312-f65403567141/go.mod h1:y9rFRA+yFZox8Qam+xMNJ0dQlLAaJlRbDWoaCZSN9Hk=
+github.com/liuhaogui/go-micro-mall v0.0.0-20200325022851-7c5301848bca h1:G2t6db75BUJm1EVwYxU7g4bjD/FtggmddduN+s2w04c=
+github.com/liuhaogui/go-micro-mall v0.0.0-20200325022851-7c5301848bca/go.mod h1:U6TAiZn+z26j19m3QRJX/5fNaaKYhgW7bKGQNxoLzj0=
 github.com/liuhaogui/go-micro-mall/common v0.0.0-20200324170335-7cf17df88cdf h1:9Fzg7N2O7fWjx3i4FztfGFFZWJdmuoAzevdTCDEA8+Y=
 github.com/liuhaogui/go-micro-mall/common v0.0.0-20200324183312-f65403567141 h1:G5jI+BOUouD85eIPtp93lwPHw43nYiMJRK+5H2NZlzo=
 github.com/liuhaogui/go-micro-mall/common v0.0.0-20200324183312-f65403567141/go.mod h1:CQfh3gT/f88uh1MzysVk9Mhb66RpLrcDmf4RZTGBo5k=
@@ -482,6 +484,8 @@ github.com/liuhaogui/go-micro-mall/common v0.0.0-20200324190151-806d97e45067 h1:
 github.com/liuhaogui/go-micro-mall/common v0.0.0-20200324190151-806d97e45067/go.mod h1:CQfh3gT/f88uh1MzysVk9Mhb66RpLrcDmf4RZTGBo5k=
 github.com/liuhaogui/go-micro-mall/common v0.0.0-20200324192941-f02fb0349d0b h1:ZQao6yhiQ8A8x/gnbH7zVtBrAhHOWhPugvKRzud4paQ=
 github.com/liuhaogui/go-micro-mall/common v0.0.0-20200324192941-f02fb0349d0b/go.mod h1:CQfh3gT/f88uh1MzysVk9Mhb66RpLrcDmf4RZTGBo5k=
+github.com/liuhaogui/go-micro-mall/common v0.0.0-20200325022851-7c5301848bca h1:nfXFIVMvgxr89epZQqxpyUWP4qmOWo710lPk2t4qXVo=
+github.com/liuhaogui/go-micro-mall/common v0.0.0-20200325022851-7c5301848bca/go.mod h1:CQfh3gT/f88uh1MzysVk9Mhb66RpLrcDmf4RZTGBo5k=
 github.com/liuhaogui/go-micro-mall/user v0.0.0-20200323042051-1919988536d2/go.mod h1:/RTnnjgvMSkjbtak5cq3uiEmmGlArjaGD/TdRg+XtPY=
 github.com/lucas-clemente/quic-go v0.7.1-0.20190710050138-1441923ab031/go.mod h1:lb5aAxL68VvhZ00e7yYuQVK/9FLggtYy4qo7oI5qzqA=
 github.com/lucas-clemente/quic-go v0.11.2/go.mod h1:PpMmPfPKO9nKJ/psF49ESTAGQSdfXxlg1otPbEB2nOw=

@@ -2,10 +2,10 @@ package main
 
 import (
 	"context"
-	cfgUtil "github.com/liuhaogui/go-micro-mall/common/config/util"
 	"github.com/afex/hystrix-go/hystrix"
 	"github.com/gin-gonic/gin"
 	"github.com/liuhaogui/go-micro-mall/api/user/handler"
+	cfgUtil "github.com/liuhaogui/go-micro-mall/common/config/util"
 	"github.com/liuhaogui/go-micro-mall/common/tracer"
 	"github.com/liuhaogui/go-micro-mall/common/warapper/tracer/opentracing/gin2micro"
 	"github.com/micro/cli"
@@ -23,13 +23,12 @@ import (
 )
 
 const appName = "user-api"
-const consul_address = "127.0.0.1:8500"
 
 var (
-	appCfg  = &cfgUtil.AppCfg{}
+	appCfg = &cfgUtil.AppCfg{}
 )
 
-func init()  {
+func init() {
 	appCfg = cfgUtil.InitGetAppCfg(appName)
 }
 
@@ -39,19 +38,12 @@ func main() {
 
 	// tracer
 	gin2micro.SetSamplingFrequency(50)
-	t, io, err := tracer.NewTracer(appCfg.Name,  cfgUtil.GetJaegerAddress())
+	t, io, err := tracer.NewTracer(appCfg.Name, cfgUtil.GetJaegerAddress())
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer io.Close()
 	opentracing.SetGlobalTracer(t)
-
-	//consul
-	//reg := consul.NewRegistry(func(op *registry.Options) {
-	//	op.Addrs = []string{
-	//		consul_address,
-	//	}
-	//})
 
 	service := web.NewService(
 		web.Name(appCfg.Name),
@@ -68,7 +60,6 @@ func main() {
 		web.Action(func(ctx *cli.Context) {
 			token.InitConfig(ctx.String("consul_address"), "micro", "config", "jwt-key", "key")
 		}),
-		//web.Registry(reg),
 		web.Address(appCfg.Addr()),
 	)
 

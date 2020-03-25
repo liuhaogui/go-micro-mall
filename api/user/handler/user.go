@@ -47,7 +47,7 @@ func (s *UserAPIService) Anything(c *gin.Context) {
 	//res, err := serviceClient.Call(ctx, &helloS.Request{Name: "xuxu"})
 	res, err := s.helloC.Call(ctx, &helloS.Request{Name: "xuxu"})
 	if err != nil {
-		log.Log("call error : ",err)
+		log.Log("call error : ", err)
 		//	c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
