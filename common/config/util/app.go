@@ -40,6 +40,7 @@ func InitGetAppCfg(appName string) (cfg *AppCfg) {
 
 	// log init
 	esCfg := GetEsCfg()
+	log.Info("esCfg: ", esCfg)
 	if esCfg.Enabled {
 		log.Info("init log es hook start")
 		log.EsLogInit(appName, esCfg)
