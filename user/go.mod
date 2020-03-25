@@ -16,7 +16,7 @@ require (
 	github.com/golang/protobuf v1.3.3
 	github.com/jinzhu/gorm v1.9.12
 	github.com/liuhaogui/go-micro-mall v0.0.3
-	github.com/liuhaogui/go-micro-mall/common v0.0.0-20200325054819-642eaddd7d6c
+	github.com/liuhaogui/go-micro-mall/common v0.0.0-20200325061633-c4bbd95e6a81
 	github.com/micro/go-micro v1.18.0
 	github.com/micro/go-plugins/config/source/consul v0.0.0-20200119172437-4fe21aa238fd
 	github.com/opentracing/opentracing-go v1.1.0
