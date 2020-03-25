@@ -6,13 +6,13 @@ replace (
 	github.com/gogo/protobuf v0.0.0-20190410021324-65acae22fc9 => github.com/gogo/protobuf v0.0.0-20190723190241-65acae22fc9d
 	github.com/micro/go-micro v1.18.0 => github.com/micro/go-micro v1.10.0
 	github.com/micro/go-plugins v1.5.1 => github.com/micro/go-plugins v1.2.0
-	github.com/liuhaogui/go-micro-mall/common => github.com/liuhaogui/go-micro-mall/common v0.0.6
+
 )
 
 require (
 	github.com/golang/protobuf v1.3.3
 	github.com/jinzhu/gorm v1.9.12
-	github.com/liuhaogui/go-micro-mall v0.0.6 // indirect
+	github.com/liuhaogui/go-micro-mall v0.0.7 // indirect
 	github.com/liuhaogui/go-micro-mall/common v0.0.0-20200325081435-695cab7db648
 
 	github.com/micro/cli v0.2.0
