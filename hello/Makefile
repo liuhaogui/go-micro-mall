@@ -1,17 +1,16 @@
 
 GOPATH:=$(shell go env GOPATH)
-MODIFY=Mgithub.com/micro/go-micro/api/proto/api.proto=github.com/micro/go-micro/v2/api/proto
 
 .PHONY: proto
 proto:
     
-	protoc --proto_path=. --micro_out=${MODIFY}:. --go_out=${MODIFY}:. proto/example/example.proto
+	cd proto/hello && protoc --proto_path=.:$GOPATH/src --go_out=. --micro_out=. hello.proto && cd -
     
 
 .PHONY: build
 build: proto
 
-	go build -o example-service *.go
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o hello-srv *.go
 
 .PHONY: test
 test:
@@ -19,4 +18,11 @@ test:
 
 .PHONY: docker
 docker:
-	docker build . -t example-service:latest
+	docker build . -t hello-srv:v0.0.1
+
+
+.PHONY: run
+run:
+	go mod download
+	MICRO_REGISTRY=consul MICRO_REGISTRY_ADDRESS=127.0.0.1:8500 go run main.go
+
