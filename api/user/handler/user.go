@@ -10,7 +10,7 @@ import (
 	"github.com/micro/go-micro/util/log"
 	"net/http"
 
-	helloS "github.com/liuhaogui/go-micro-mall/example/proto/hello"
+	helloS "github.com/liuhaogui/go-micro-mall/hello/proto/hello"
 	userS "github.com/liuhaogui/go-micro-mall/user/proto/user"
 )
 

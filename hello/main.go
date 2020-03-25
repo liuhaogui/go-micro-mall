@@ -9,11 +9,11 @@ import (
 	"github.com/opentracing/opentracing-go"
 	"time"
 
-	"github.com/liuhaogui/go-micro-mall/example/handler"
-	//"github.com/liuhaogui/go-micro-mall/example/subscriber"
+	"github.com/liuhaogui/go-micro-mall/hello/handler"
+	//"github.com/liuhaogui/go-micro-mall/hello/subscriber"
 
 
-	example "github.com/liuhaogui/go-micro-mall/example/proto/hello"
+	example "github.com/liuhaogui/go-micro-mall/hello/proto/hello"
 	ocplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
 	"github.com/liuhaogui/go-micro-mall/common/tracer"
 	//"github.com/micro/cli"
