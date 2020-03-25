@@ -3,6 +3,7 @@ package handler
 import (
 	//"context"
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/liuhaogui/go-micro-mall/common/token"
 	"github.com/liuhaogui/go-micro-mall/common/util/log"
@@ -100,7 +101,12 @@ func (s *UserAPIService) Create(c *gin.Context) {
 	if err != nil {
 		c.Abort()
 		log.Infof("error : %s  , resp : %s ", err, resp)
-		c.JSON(http.StatusBadRequest, err)
+		r := Resp{
+			Msg:     "register failed",
+			Error:   fmt.Sprintf("%s", err),
+			Success: false,
+		}
+		c.JSON(http.StatusCreated, r)
 		return
 	}
 	r := Resp{Success: true, Error: "", Msg: "success"}

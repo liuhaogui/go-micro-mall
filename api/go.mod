@@ -11,7 +11,7 @@ replace (
 require (
 	github.com/afex/hystrix-go v0.0.0-20180502004556-fa1af6a1f4f5
 	github.com/gin-gonic/gin v1.6.1
-	github.com/liuhaogui/go-micro-mall v0.0.12
+	github.com/liuhaogui/go-micro-mall v0.0.13
 	github.com/liuhaogui/go-micro-mall/user v0.0.0-20200325143740-10248f99c72a
 
 	github.com/micro/cli v0.2.0

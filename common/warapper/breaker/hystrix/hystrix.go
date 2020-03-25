@@ -24,7 +24,14 @@ func BreakerWrapper(h http.Handler) http.Handler {
 				return errors.New(str)
 			}
 			return nil
-		}, nil)
+		}, func(e error) error {
+			if e == hystrix.ErrCircuitOpen {
+				w.WriteHeader(http.StatusAccepted)
+				w.Write([]byte("please retry later."))
+			}
+
+			return e
+		})
 		if err != nil {
 			log.Info("hystrix breaker err: ", err)
 			return

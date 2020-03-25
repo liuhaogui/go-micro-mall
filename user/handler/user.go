@@ -35,7 +35,8 @@ func (ser *UserService) Create(ctx context.Context, req *pb.User, resp *pb.Respo
 	}
 
 	// 重复检查
-	if u, err := db.GetByTel(req.Phone); err != nil && u.Id > 0 {
+	if u, err := db.GetByTel(req.Phone); err == nil && u.Id > 0 {
+		log.Info("User name already exists.")
 		return errors.New("User name already exists.")
 	}
 
