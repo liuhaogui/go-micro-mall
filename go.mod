@@ -16,5 +16,5 @@ require (
 	github.com/micro/go-micro v1.18.0
 	github.com/micro/go-plugins v1.5.1
 	github.com/opentracing/opentracing-go v1.1.0
-	google.golang.org/grpc v1.28.0
+	google.golang.org/grpc v1.28.0 // indirect
 )

@@ -509,6 +509,7 @@ github.com/liuhaogui/go-micro-mall v0.0.0-20200323131939-9a71bea8fde9 h1:OzsDrVw
 github.com/liuhaogui/go-micro-mall v0.0.0-20200323131939-9a71bea8fde9/go.mod h1:ldjdDvHioRijvCinv0/JtAvcmVc9786SXJ2mJ/n1fnQ=
 github.com/liuhaogui/go-micro-mall v0.0.2 h1:NcGtxHAJP0wWAqebiKNoSDghJ0pWu3OQI9ArV6Dd0Po=
 github.com/liuhaogui/go-micro-mall v0.0.2/go.mod h1:FNTeeYsJ5hRRFXlxdJNQCsRERFB/UPBJ56brq9Sx8p4=
+github.com/liuhaogui/go-micro-mall v0.0.3/go.mod h1:Xi9RJJCRTMSl5HkFdqUVLriUll8Z09K8XqXPpyn1YTM=
 github.com/liuhaogui/go-micro-mall/common v0.0.0-20200325022851-7c5301848bca/go.mod h1:CQfh3gT/f88uh1MzysVk9Mhb66RpLrcDmf4RZTGBo5k=
 github.com/liuhaogui/go-micro-mall/common v0.0.0-20200325054819-642eaddd7d6c h1:nnqaUfC/ca0/ORFa7ANJ6dkSnva0Z5rczDF67+3ZH6s=
 github.com/liuhaogui/go-micro-mall/common v0.0.0-20200325054819-642eaddd7d6c/go.mod h1:nNmdVpIPu1cHSyReS7ACgB6KTsJ3yLN5oeYCmC/IFIQ=
