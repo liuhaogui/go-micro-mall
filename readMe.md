@@ -4,13 +4,13 @@
 - 核心功能组件：
     - api gateway
     - 注册中心 （consul）
-    - [x] 配置中心
+    - 配置中心
     - 熔断
     - 链路追踪
     - jwt
     - metrics
     - [x] 日志推送es
-    - 健康检查
+    - [x] 健康检查
     - [x] Swagger
 
 ### 相关组件运行

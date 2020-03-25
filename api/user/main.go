@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	cfgUtil "github.com/liuhaogui/go-micro-mall/common/config/util"
 	"github.com/afex/hystrix-go/hystrix"
 	"github.com/gin-gonic/gin"
 	"github.com/liuhaogui/go-micro-mall/api/user/handler"
@@ -21,8 +22,16 @@ import (
 	ocplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
 )
 
-const name = "go.micro.api.user"
+const appName = "user-api"
 const consul_address = "127.0.0.1:8500"
+
+var (
+	appCfg  = &cfgUtil.AppCfg{}
+)
+
+func init()  {
+	appCfg = cfgUtil.InitGetAppCfg(appName)
+}
 
 func main() {
 	// token
@@ -30,7 +39,7 @@ func main() {
 
 	// tracer
 	gin2micro.SetSamplingFrequency(50)
-	t, io, err := tracer.NewTracer(name, "")
+	t, io, err := tracer.NewTracer(appCfg.Name,  cfgUtil.GetJaegerAddress())
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -45,7 +54,7 @@ func main() {
 	//})
 
 	service := web.NewService(
-		web.Name(name),
+		web.Name(appCfg.Name),
 		web.Version("lastest"),
 		web.RegisterTTL(time.Second*15),
 		web.RegisterInterval(time.Second*10),
@@ -54,13 +63,13 @@ func main() {
 			Name:   "consul_address",
 			Usage:  "consul address for K/V",
 			EnvVar: "CONSUL_ADDRESS",
-			Value:  consul_address,
+			Value:  cfgUtil.GetConsulAddress(),
 		}),
 		web.Action(func(ctx *cli.Context) {
-			token.InitConfig(consul_address, "micro", "config", "jwt-key", "key")
+			token.InitConfig(ctx.String("consul_address"), "micro", "config", "jwt-key", "key")
 		}),
 		//web.Registry(reg),
-		web.Address(":9081"),
+		web.Address(appCfg.Addr()),
 	)
 
 	if err := service.Init(); err != nil {

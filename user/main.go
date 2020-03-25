@@ -17,13 +17,11 @@ import (
 	"github.com/liuhaogui/go-micro-mall/common/token"
 	"github.com/liuhaogui/go-micro-mall/common/tracer"
 
-	comCfg "github.com/liuhaogui/go-micro-mall/common/config"
 	db "github.com/liuhaogui/go-micro-mall/user/model"
 )
 
 const (
 	appName      = "user-srv"
-	appNameSpace = "go.micro.srv.user"
 )
 
 var (
@@ -40,7 +38,7 @@ func main() {
 	var consulAddr string
 
 	// tracer
-	t, io, err := tracer.NewTracer(appNameSpace, comCfg.Consul_address)
+	t, io, err := tracer.NewTracer(appCfg.Name, cfgUtil.GetJaegerAddress())
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -70,7 +68,7 @@ func main() {
 			token.InitConfig(ctx.String("consul_address"), "micro", "config", "jwt-key", "key")
 		}),
 		//micro.Registry(reg),
-		micro.Address(":8091"),
+		micro.Address(appCfg.Addr()),
 	)
 
 	// Initialise service

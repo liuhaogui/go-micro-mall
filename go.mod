@@ -10,6 +10,8 @@ replace (
 )
 
 require (
+	github.com/golang/protobuf v1.3.3
+	github.com/liuhaogui/go-micro-mall/common v0.0.0-20200324192941-f02fb0349d0b // indirect
 	github.com/micro/go-micro v1.18.0
 	github.com/micro/go-plugins v1.5.1
 	google.golang.org/grpc v1.28.0

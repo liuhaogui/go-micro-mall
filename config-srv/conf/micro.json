@@ -1,14 +1,19 @@
 {
   "micro":{
-      "user_service":{
+      "user-srv":{
         "name": "go.micro.srv.user",
         "address": "127.0.0.1",
         "port": 9090
       },
-      "user_api":{
-        "name":"api.micro.framework.api.user",
+      "user-api":{
+        "name":"go.micro.api.user",
         "address": "127.0.0.1",
-        "port": 10000
+        "port": 9091
+      },
+      "hello-srv":{
+        "name":"go.micro.srv.hello",
+        "address": "127.0.0.1",
+        "port": 9092
       },
       "etcd":{
           "enabled": true,
@@ -19,6 +24,11 @@
         "enabled": true,
         "host":"localhost",
         "port": 8500
+      },
+      "jaeger" : {
+        "enabled": true,
+        "host": "localhost",
+        "posrt": "6831"
       },
       "db":{
           "mysql":{
@@ -41,7 +51,7 @@
           }
       },
       "jwt":{
-        "secretKey": "W6VjDud2W1kMG3BicbMNlGgI4ZfcoHtMGLWr"
+        "secretKey": "asdf1saf233asdfas3df"
       }
   }
 }

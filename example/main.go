@@ -2,7 +2,8 @@ package main
 
 import (
 	"context"
-	"github.com/liuhaogui/go-micro-mall/common/tracer"
+
+	"github.com/micro/cli"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/util/log"
 	"github.com/opentracing/opentracing-go"
@@ -11,9 +12,12 @@ import (
 	"github.com/liuhaogui/go-micro-mall/example/handler"
 	//"github.com/liuhaogui/go-micro-mall/example/subscriber"
 
+
 	example "github.com/liuhaogui/go-micro-mall/example/proto/example"
 	ocplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
+	"github.com/liuhaogui/go-micro-mall/common/tracer"
 	//"github.com/micro/cli"
+	cfgUtil "github.com/liuhaogui/go-micro-mall/common/config/util"
 )
 
 func Handler(ctx context.Context, msg *example.Message) error {
@@ -21,30 +25,40 @@ func Handler(ctx context.Context, msg *example.Message) error {
 	return nil
 }
 
-var name = "go.micro.srv.hello"
+const (
+	appName = "hello-srv"
+)
+
+var (
+	appCfg = &cfgUtil.AppCfg{}
+)
+
+func init() {
+	appCfg = cfgUtil.InitGetAppCfg(appName)
+}
 
 func main() {
-	t, io, err := tracer.NewTracer(name, "")
+	t, io, err := tracer.NewTracer(appCfg.Name,  cfgUtil.GetJaegerAddress())
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer io.Close()
 	opentracing.SetGlobalTracer(t)
 
-	//reg := consul.NewRegistry(func(op *registry.Options) {
-	//	op.Addrs = []string{
-	//		"127.0.0.1:8500",
-	//	}
-	//})
-
-
 	// New Service
 	service := micro.NewService(
-		micro.Name(name),
+		micro.Name(appCfg.Name),
 		micro.WrapHandler(ocplugin.NewHandlerWrapper(t)),
+		micro.Flags(cli.StringFlag{
+			Name:   "consul_address",
+			Usage:  "consul address for K/V",
+			EnvVar: "CONSUL_ADDRESS",
+			Value:  cfgUtil.GetConsulAddress(),
+		}),
 		micro.RegisterTTL(time.Second*15),
 		micro.RegisterInterval(time.Second*10),
 		//micro.Registry(reg),
+		micro.Address(appCfg.Addr()),
 		micro.Version("latest"),
 	)
 

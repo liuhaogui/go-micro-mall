@@ -50,3 +50,15 @@ func GetConsulAddress() string {
 
 	return fmt.Sprintf("%s:%d", consulCfg.Host, consulCfg.Port)
 }
+
+
+
+func GetJaegerAddress() string {
+	JaegerCfg := &Jaeger{}
+	err := config.C().App("jaeger", JaegerCfg)
+	if err != nil {
+		panic(err)
+	}
+
+	return fmt.Sprintf("%s:%d", JaegerCfg.Host, JaegerCfg.Port)
+}
