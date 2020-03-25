@@ -12,7 +12,6 @@ replace (
 require (
 	github.com/golang/protobuf v1.3.3
 	github.com/jinzhu/gorm v1.9.12
-	github.com/liuhaogui/go-micro-mall v0.0.7 // indirect
 	github.com/liuhaogui/go-micro-mall/common v0.0.0-20200325081435-695cab7db648
 
 	github.com/micro/cli v0.2.0
