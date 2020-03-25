@@ -8,6 +8,8 @@ import (
 	"github.com/liuhaogui/go-micro-mall/common/util/log"
 	"net"
 	"net/http"
+	"time"
+
 	//"github.com/liuhaogui/go-micro-mall/common/token"
 	"github.com/liuhaogui/go-micro-mall/common/tracer"
 	//"github.com/liuhaogui/go-micro-mall/common/warapper/auth"
@@ -16,14 +18,24 @@ import (
 	"github.com/liuhaogui/go-micro-mall/common/warapper/tracer/opentracing/stdhttp"
 
 	"github.com/micro/cli"
+	"github.com/micro/go-micro"
 	"github.com/micro/go-plugins/micro/cors"
 	"github.com/micro/micro/cmd"
 	"github.com/micro/micro/plugin"
 	opentracing "github.com/opentracing/opentracing-go"
+	cfgUtil "github.com/liuhaogui/go-micro-mall/common/config/util"
 )
 
-const app_name = "API gateway"
+const appName = "api-gateway"
 const consul_address = "127.0.0.1:8500"
+
+var (
+	appCfg = &cfgUtil.AppCfg{}
+)
+
+func init() {
+	appCfg = cfgUtil.InitGetAppCfg(appName)
+}
 
 func init() {
 	token := &token.Token{}
@@ -71,7 +83,7 @@ func init() {
 func main() {
 	stdhttp.SetSamplingFrequency(50)
 
-	t, io, err := tracer.NewTracer(app_name, "")
+	t, io, err := tracer.NewTracer(appName, "")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -82,18 +94,11 @@ func main() {
 	hystrixStreamHandler.Start()
 	go http.ListenAndServe(net.JoinHostPort("", "81"), hystrixStreamHandler)
 
-	//consul
-	//reg := consul.NewRegistry(func(op *registry.Options) {
-	//	op.Addrs = []string{
-	//		consul_address,
-	//	}
-	//})
-
 	cmd.Init(
-		//micro.Name(app_name),
-		//micro.RegisterTTL(time.Second*15),
-		//micro.RegisterInterval(time.Second*10),
-		//micro.Registry(reg),
+		micro.Name(appCfg.Name),
+		micro.RegisterTTL(time.Second*15),
+		micro.RegisterInterval(time.Second*10),
+		micro.Address(appCfg.Addr()),
 		//micro.Version("latest"),
 	)
 

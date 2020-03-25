@@ -15,6 +15,11 @@
         "address": "localhost",
         "port": 9092
       },
+      "api-gateway":{
+        "name":"go.micro.api-gateway",
+        "address": "localhost",
+        "port": 8080
+      },
       "etcd":{
           "enabled": true,
           "host":"localhost",

@@ -12,7 +12,7 @@ replace (
 require (
 	github.com/golang/protobuf v1.3.3
 	github.com/jinzhu/gorm v1.9.12
-	github.com/liuhaogui/go-micro-mall v0.0.9
+	github.com/liuhaogui/go-micro-mall v0.0.11
 
 	github.com/micro/cli v0.2.0
 	github.com/micro/go-micro v1.18.0
