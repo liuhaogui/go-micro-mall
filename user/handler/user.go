@@ -36,7 +36,7 @@ func (ser *UserService) Create(ctx context.Context, req *pb.User, resp *pb.Respo
 
 	// 重复检查
 	if u, err := db.GetByTel(req.Phone); err == nil && u.Id > 0 {
-		log.Info("User name already exists.")
+		log.Errorf("User[%s]already exists.", req.Phone)
 		return errors.New("User name already exists.")
 	}
 
@@ -44,7 +44,7 @@ func (ser *UserService) Create(ctx context.Context, req *pb.User, resp *pb.Respo
 	req.UpdatedUnix = time.Now().Unix()
 	req.Salt, err = tool.RandomString(10)
 	if err != nil {
-		log.Error("server error, plase retry later.")
+		log.Error("generate salt RandomString error ")
 	}
 
 	req.Password = EncodePasswd(req.Password, req.Salt)

@@ -36,6 +36,13 @@
         "host":"localhost",
         "port": 9200
       },
+      "hystrix" : {
+        "defaultTimeout": 15000,
+        "defaultMaxConcurrent": 10,
+        "defaultVolumeThreshold": 20,
+        "defaultSleepWindow": 5000,
+        "defaultErrorPercentThreshold": 50
+      },
       "jaeger" : {
         "enabled": true,
         "host": "localhost",

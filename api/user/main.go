@@ -67,7 +67,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	hystrix.DefaultTimeout = 5000
+	hystrix.DefaultTimeout = 15000
 
 	sClient := hystrixplugin.NewClientWrapper()(service.Options().Service.Client())
 	sClient.Init(

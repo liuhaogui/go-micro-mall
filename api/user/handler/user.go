@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"encoding/json"
 	//"context"
 	"errors"
 	"fmt"
@@ -93,24 +94,50 @@ func (s *UserAPIService) Create(c *gin.Context) {
 	var user userS.User
 
 	if err := c.ShouldBindJSON(&user); err != nil {
-		c.AbortWithError(http.StatusBadRequest, errors.New("JWT decode failed"))
+		log.Error(err)
+		c.AbortWithStatusJSON(http.StatusOK, resetError(err, "JWT decode failed"))
 		return
 	}
 
 	resp, err := s.userC.Create(ctx, &user)
 	if err != nil {
-		c.Abort()
-		log.Infof("error : %s  , resp : %s ", err, resp)
-		r := Resp{
-			Msg:     "register failed",
-			Error:   fmt.Sprintf("%s", err),
-			Success: false,
-		}
-		c.JSON(http.StatusCreated, r)
+		log.Errorf("error : %s  , resp : %s ", err, resp)
+		c.AbortWithStatusJSON(http.StatusOK, resetError(err, "register failed"))
 		return
 	}
-	r := Resp{Success: true, Error: "", Msg: "success"}
-	c.JSON(http.StatusCreated, r)
+	c.JSON(http.StatusCreated, resetRespData("register success"))
+}
+
+func resetRespData(msg string) Resp {
+	return Resp{
+		Msg:     msg,
+		Error:   "",
+		Success: true,
+	}
+}
+
+func resetError(err error, msg string) Resp {
+	e := parserRespError(err)
+	return Resp{
+		Msg:     fmt.Sprintf("%s %s", msg, e),
+		Error:   e,
+		Success: false,
+	}
+}
+
+func parserRespError(err error) string {
+	type RespError struct {
+		Id     string `json:"id"`
+		Code   int    `json:"code"`
+		Detail string `json:"detail"`
+		Status string `json:"status"`
+	}
+	r := &RespError{}
+	if err := json.Unmarshal([]byte(fmt.Sprintf("%s", err)), r); err != nil {
+		return ""
+	}
+
+	return r.Detail
 }
 
 func (s *UserAPIService) Login(c *gin.Context) {
