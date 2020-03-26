@@ -20,6 +20,9 @@ import (
 
 	"github.com/liuhaogui/go-micro-mall/common/token"
 	ocplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
+
+	"github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
 )
 
 const appName = "user-api"
@@ -93,6 +96,7 @@ func main() {
 	r.POST("/register", apiService.Create)
 	r.POST("/login", apiService.Login)
 
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	service.Handle("/", router)
 
 	if err := service.Run(); err != nil {
