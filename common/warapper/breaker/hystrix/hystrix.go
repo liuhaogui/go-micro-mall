@@ -36,7 +36,7 @@ func BreakerWrapper(h http.Handler) http.Handler {
 				return errors.New(str)
 			}
 			return nil
-		}, func(e error) error {
+		}, nil, /*func(e error) error {
 			//if e == hystrix.ErrCircuitOpen {
 				//w.WriteHeader(http.StatusBadRequest)
 				//errResp := `{"msg":"Server error, please try again later", "error":"%s", "success":false}`
@@ -46,7 +46,7 @@ func BreakerWrapper(h http.Handler) http.Handler {
 			//}
 
 			return e
-		})
+		}*/)
 		if err != nil {
 			log.Error("hystrix breaker err: ", err)
 			return
