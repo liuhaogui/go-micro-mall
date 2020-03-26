@@ -103,23 +103,30 @@ func (ser *UserService) Auth(ctx context.Context, req *pb.User, resp *pb.Token) 
 	if len(req.Phone) > 0 {
 		user, err = db.GetByTel(req.Phone)
 		if err != nil {
+			log.Errorf("user[%s] not exists", req.Phone)
 			return err
 		}
 	} else {
+		log.Error("parames error， phone is empty")
 		return errors.New("phone cannot be empty")
 	}
 
 	inputPasswd := EncodePasswd(req.Password, user.Salt)
+	log.Infof("input[%s] salt[%s] = [%s] ,db secrt[%s]", req.Password, user.Salt, inputPasswd, user.Password)
+	v := ValidatePassword(user.Password, inputPasswd)
+	log.Info("ValidatePassword", v)
 	if ValidatePassword(user.Password, inputPasswd) {
 		var tokenStr string
 		expireTime := time.Now().Add(time.Hour * 24).Unix() // 1天后过期
 		tokenStr, err = ser.token.Encode(issuer, user.Phone, expireTime)
 		if err != nil {
+			log.Error("get token error ")
 			return err
 		}
 		resp.Token = tokenStr
 		return nil
 	}
+	log.Error("Incorrect account or password")
 	return errors.New("Incorrect account or password")
 }
 

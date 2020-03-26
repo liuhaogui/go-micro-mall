@@ -2,8 +2,7 @@ package handler
 
 import (
 	"encoding/json"
-	//"context"
-	"errors"
+
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/liuhaogui/go-micro-mall/common/token"
@@ -19,9 +18,10 @@ import (
 const name = "go.micro.api.user"
 
 type Resp struct {
-	Error   string `json:"error"`
-	Success bool   `json:"success"`
-	Msg     string `json:"message"`
+	Error   string      `json:"error"`
+	Success bool        `json:"success"`
+	Msg     string      `json:"message"`
+	Data    interface{} `json:"data"`
 }
 
 // UserAPIService 服务
@@ -87,24 +87,25 @@ func (s *UserAPIService) Create(c *gin.Context) {
 
 	if err := c.ShouldBindJSON(&user); err != nil {
 		log.Error(err)
-		c.AbortWithStatusJSON(http.StatusOK, resetError(err, "JWT decode failed"))
+		c.AbortWithStatusJSON(http.StatusOK, resetError(err, "JWT decode failed."))
 		return
 	}
 
 	resp, err := s.userC.Create(ctx, &user)
 	if err != nil {
 		log.Errorf("error : %s  , resp : %s ", err, resp)
-		c.AbortWithStatusJSON(http.StatusOK, resetError(err, "register failed"))
+		c.AbortWithStatusJSON(http.StatusOK, resetError(err, "register failed."))
 		return
 	}
-	c.JSON(http.StatusCreated, resetRespData("register success"))
+	c.JSON(http.StatusCreated, resetRespData("register success", ""))
 }
 
-func resetRespData(msg string) Resp {
+func resetRespData(msg string, data interface{}) Resp {
 	return Resp{
 		Msg:     msg,
 		Error:   "",
 		Success: true,
+		Data:    data,
 	}
 }
 
@@ -141,15 +142,17 @@ func (s *UserAPIService) Login(c *gin.Context) {
 	var user userS.User
 
 	if err := c.ShouldBindJSON(&user); err != nil {
-		c.AbortWithError(http.StatusBadRequest, errors.New("JWT decode failed"))
+		log.Error("login BindJson error ", err)
+		c.AbortWithStatusJSON(http.StatusOK, resetError(err, "JWT decode failed."))
 		return
 	}
 
 	token, err := s.userC.Auth(ctx, &user)
 	if err != nil {
-		c.AbortWithError(http.StatusInternalServerError, err)
+		log.Error("login auth error ", err)
+		c.AbortWithStatusJSON(http.StatusOK, resetError(err, "phone or password is wrong."))
 		return
 	}
 
-	c.JSON(http.StatusCreated, token)
+	c.JSON(http.StatusCreated, resetRespData("login success", token))
 }

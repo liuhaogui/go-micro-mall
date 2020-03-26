@@ -19,5 +19,8 @@ docker:
 .PHONY: run
 run:
 	go mod download
-	go run main.go
+	CONSUL_ADDRESS=127.0.0.1:8500 \
+        MICRO_REGISTRY=consul \
+        MICRO_REGISTRY_ADDRESS=127.0.0.1:8500 \
+        MICRO_API_HANDLER=http go run user/main.go
 
