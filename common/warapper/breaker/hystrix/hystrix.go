@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-func init() {
+func InitCfg() {
 	cfg := cfgUtil.GetHystrixCfg()
 	log.Infof("hystrix init config %s ", cfg)
 	hystrix.DefaultTimeout = cfg.DefaultTimeout
@@ -18,11 +18,11 @@ func init() {
 	hystrix.DefaultVolumeThreshold = cfg.DefaultVolumeThreshold
 	hystrix.DefaultSleepWindow = cfg.DefaultSleepWindow
 	hystrix.DefaultErrorPercentThreshold = cfg.DefaultErrorPercentThreshold
-
 }
 
 // BreakerWrapper hystrix breaker
 func BreakerWrapper(h http.Handler) http.Handler {
+	InitCfg()
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		name := r.Method + "-" + r.RequestURI
 		log.Info(name)

@@ -1,7 +1,6 @@
 package main
 
 import (
-	ph "github.com/afex/hystrix-go/hystrix"
 	"github.com/liuhaogui/go-micro-mall/common/token"
 	"github.com/liuhaogui/go-micro-mall/common/util/log"
 	"github.com/liuhaogui/go-micro-mall/common/warapper/auth"
@@ -17,6 +16,7 @@ import (
 	"github.com/liuhaogui/go-micro-mall/common/warapper/metrics/prometheus"
 	"github.com/liuhaogui/go-micro-mall/common/warapper/tracer/opentracing/stdhttp"
 
+	ph "github.com/afex/hystrix-go/hystrix"
 	cfgUtil "github.com/liuhaogui/go-micro-mall/common/config/util"
 	"github.com/micro/cli"
 	"github.com/micro/go-micro"
