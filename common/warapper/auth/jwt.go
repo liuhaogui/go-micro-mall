@@ -11,9 +11,10 @@ import (
 func JWTAuthWrapper(token *token.Token) plugin.Handler {
 	return func(h http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			log.Info("auth plugin received: " + r.URL.Path)
+			log.Info("auth plugin received: ", r.URL.Path)
 			// TODO 从配置中心动态获取白名单URL
 			if r.URL.Path == "/api/user/login" || r.URL.Path == "/api/user/register" || r.URL.Path == "/api/user/test" || r.URL.Path == "/metrics" {
+				log.Info("pass ", r.URL.Path)
 				h.ServeHTTP(w, r)
 				return
 			}
