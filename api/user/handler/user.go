@@ -77,14 +77,6 @@ func (s *UserAPIService) Anything(c *gin.Context) {
 }
 
 // Create 新建一个用户
-/**
-{
-	"name":"xx",
-	"email": "123.@qq.com",
-	"tel":"tel1",
-	"password":"d"
-}
-*/
 func (s *UserAPIService) Create(c *gin.Context) {
 
 	ctx, ok := gin2micro.ContextWithSpan(c)

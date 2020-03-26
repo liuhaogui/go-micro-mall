@@ -2,8 +2,8 @@ package auth
 
 import (
 	"github.com/liuhaogui/go-micro-mall/common/token"
-	"github.com/micro/micro/plugin"
 	"github.com/liuhaogui/go-micro-mall/common/util/log"
+	"github.com/micro/micro/plugin"
 	"net/http"
 )
 
@@ -22,6 +22,7 @@ func JWTAuthWrapper(token *token.Token) plugin.Handler {
 			userFromToken, e := token.Decode(tokenstr)
 
 			if e != nil {
+				log.Error("Unauthorized : ", r.URL.Path)
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
