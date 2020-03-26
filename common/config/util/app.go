@@ -89,7 +89,13 @@ func GetHystrixCfg() *Hystrix {
 	log.Info("hystrixCfg load config : ", hystrixCfg)
 	if err != nil {
 		log.Error("load hystrix config error ", err)
-		panic(err)
+		return &Hystrix{
+			DefaultTimeout:               1000,
+			DefaultMaxConcurrent:         10,
+			DefaultVolumeThreshold:       20,
+			DefaultSleepWindow:           5000,
+			DefaultErrorPercentThreshold: 50,
+		}
 	}
 
 	return hystrixCfg
