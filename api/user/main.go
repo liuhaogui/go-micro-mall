@@ -84,7 +84,7 @@ func main() {
 
 	apiService := handler.New(sClient, token)
 	router := gin.Default()
-	r := router.Group("/user")
+	r := router.Group("/api/user")
 	r.Use(gin2micro.TracerWrapper)
 	r.GET("/test", apiService.Anything)
 	r.POST("/register", apiService.Create)
