@@ -32,21 +32,20 @@ func BreakerWrapper(h http.Handler) http.Handler {
 
 			if sct.Status >= http.StatusBadRequest {
 				str := fmt.Sprintf("status code %d ", sct.Status)
-				log.Error(str,name)
+				log.Error(str, name)
 				return errors.New(str)
 			}
 			return nil
-		}, nil, /*func(e error) error {
-			//if e == hystrix.ErrCircuitOpen {
-				//w.WriteHeader(http.StatusBadRequest)
-				//errResp := `{"msg":"Server error, please try again later", "error":"%s", "success":false}`
-				//errResp = fmt.Sprintf(errResp, e)
-				//
-				//w.Write([]byte(errResp))
-			//}
+		}, func(e error) error {
+			if e == hystrix.ErrCircuitOpen {
+				w.WriteHeader(http.StatusBadRequest)
+				errResp := `{"msg":"Server error, please try again later", "error":"%s", "success":false}`
+				errResp = fmt.Sprintf(errResp, e)
 
+				w.Write([]byte(errResp))
+			}
 			return e
-		}*/)
+		})
 		if err != nil {
 			log.Error("hystrix breaker err: ", err)
 			return
