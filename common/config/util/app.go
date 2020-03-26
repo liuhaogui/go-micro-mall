@@ -33,6 +33,7 @@ func InitGetAppCfg(appName string) (cfg *AppCfg) {
 
 	err := config.C().App(appName, cfg)
 	if err != nil {
+		log.Errorf("load app[%s] config error  %s ", appName, err)
 		panic(err)
 	}
 
@@ -50,9 +51,10 @@ func InitGetAppCfg(appName string) (cfg *AppCfg) {
 }
 
 func GetConsulAddress() string {
-	consulCfg := &Etcd{}
+	consulCfg := &Consul{}
 	err := config.C().App("consul", consulCfg)
 	if err != nil {
+		log.Error("load consul config error ", err)
 		panic(err)
 	}
 
@@ -63,6 +65,7 @@ func GetJaegerAddress() string {
 	jaegerCfg := &Jaeger{}
 	err := config.C().App("jaeger", jaegerCfg)
 	if err != nil {
+		log.Error("load jaeger config error ", err)
 		panic(err)
 	}
 
@@ -73,6 +76,7 @@ func GetEsCfg() *ElasticSearch {
 	esCfg := &ElasticSearch{}
 	err := config.C().App("elasticsearch", esCfg)
 	if err != nil {
+		log.Error("load elasticsearch config error ", err)
 		panic(err)
 	}
 
@@ -82,8 +86,9 @@ func GetEsCfg() *ElasticSearch {
 func GetHystrixCfg() *Hystrix {
 	hystrixCfg := &Hystrix{}
 	err := config.C().App("hystrix", hystrixCfg)
-	log.Info("hystrixCfg load config : ",hystrixCfg)
+	log.Info("hystrixCfg load config : ", hystrixCfg)
 	if err != nil {
+		log.Error("load hystrix config error ", err)
 		panic(err)
 	}
 
