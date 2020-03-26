@@ -386,13 +386,11 @@ github.com/leodido/go-urn v1.2.0/go.mod h1:+8+nEpDfqqsY+g338gtMEUOtuK+4dEMhiQEgx
 github.com/lib/pq v1.1.0/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=
 github.com/lib/pq v1.1.1/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=
 github.com/lib/pq v1.2.0/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=
-github.com/liuhaogui/go-micro-mall v0.0.11/go.mod h1:C567Qn0I4dC7kbdJ7pzazMT48t/9Yyb/IcRd1o9n+VA=
-github.com/liuhaogui/go-micro-mall v0.0.22 h1:FXrwchWfCfJDjKPVrInX2jvnMHs668XJVIQRes+O0m0=
-github.com/liuhaogui/go-micro-mall v0.0.22/go.mod h1:349JPe+Jq8GzOxM68dDHezfd07+6gFEQOjOVOi5pJM0=
-github.com/liuhaogui/go-micro-mall v0.0.23 h1:4ZJ4bOrSyGETpNKSjMA4PYnewDBCqhvrwqARMBGJMvs=
-github.com/liuhaogui/go-micro-mall v0.0.23/go.mod h1:349JPe+Jq8GzOxM68dDHezfd07+6gFEQOjOVOi5pJM0=
-github.com/liuhaogui/go-micro-mall/user v0.0.0-20200325143740-10248f99c72a h1:NM9nEmoisE9eEJe41qa1qn5R9G6gydmOu3N+g2ktLrY=
-github.com/liuhaogui/go-micro-mall/user v0.0.0-20200325143740-10248f99c72a/go.mod h1:8zL6JSTyrMFahqN1TBaE35K0JBkt+Vxi++CBji65t20=
+github.com/liuhaogui/go-micro-mall v0.0.12/go.mod h1:349JPe+Jq8GzOxM68dDHezfd07+6gFEQOjOVOi5pJM0=
+github.com/liuhaogui/go-micro-mall v0.0.24 h1:xs5XMCk4icZagvE1q6i5gYAQ7nexMjgnJ5d9is7nOq4=
+github.com/liuhaogui/go-micro-mall v0.0.24/go.mod h1:349JPe+Jq8GzOxM68dDHezfd07+6gFEQOjOVOi5pJM0=
+github.com/liuhaogui/go-micro-mall/user v0.0.0-20200326025257-f0ac28ddf1f3 h1:BnSkv/wMAgOhlbM2vzpkekSbVTHt+0GlCKPPDbZVQo0=
+github.com/liuhaogui/go-micro-mall/user v0.0.0-20200326025257-f0ac28ddf1f3/go.mod h1:vk3pNCqo01pkBct9sIw5nRL9d383bYOnrdwR4z5HpdI=
 github.com/lucas-clemente/quic-go v0.7.1-0.20190710050138-1441923ab031/go.mod h1:lb5aAxL68VvhZ00e7yYuQVK/9FLggtYy4qo7oI5qzqA=
 github.com/lucas-clemente/quic-go v0.11.2/go.mod h1:PpMmPfPKO9nKJ/psF49ESTAGQSdfXxlg1otPbEB2nOw=
 github.com/lucas-clemente/quic-go v0.12.0 h1:TRbvZ6F++sofeGbh+Z2IIyIOhl8KyGnYuA06g2yrHdI=
@@ -542,7 +540,6 @@ github.com/ryanuber/columnize v2.1.0+incompatible/go.mod h1:sm1tb6uqfes/u+d4ooFo
 github.com/ryanuber/go-glob v1.0.0/go.mod h1:807d1WSdnB0XRJzKNil9Om6lcp/3a0v4qIHxIXzX/Yc=
 github.com/ryszard/goskiplist v0.0.0-20150312221310-2dfbae5fcf46/go.mod h1:uAQ5PCi+MFsC7HjREoAz1BU+Mq60+05gifQSsHSDG/8=
 github.com/samuel/go-zookeeper v0.0.0-20180130194729-c4fab1ac1bec/go.mod h1:gi+0XIa01GRL2eRQVjQkKGqKF3SF9vZR/HnPullcV2E=
-github.com/satori/go.uuid v1.2.1-0.20181028125025-b2ce2384e17b/go.mod h1:dA0hQrYB0VpLJoorglMZABFdXlWrHn1NEOzdhQKdks0=
 github.com/sean-/seed v0.0.0-20170313163322-e2103e2c3529 h1:nn5Wsu0esKSJiIVhscUtVbo7ada43DJhG55ua/hjS5I=
 github.com/sean-/seed v0.0.0-20170313163322-e2103e2c3529/go.mod h1:DxrIzT+xaE7yg65j358z/aeFdxmN0P9QXhEzd20vsDc=
 github.com/serenize/snaker v0.0.0-20171204205717-a683aaf2d516/go.mod h1:Yow6lPLSAXx2ifx470yD/nUe22Dv5vBvxK/UK9UUTVs=
