@@ -18,7 +18,7 @@ type ElasticSearch struct {
 
 func EsLogInit(appname string, esCfg *ElasticSearch) {
 	esUrl := fmt.Sprintf("%s://%s:%d", esCfg.Protocol, esCfg.Host, esCfg.Port)
-	client, err := elastic.NewClient(elastic.SetURL(esUrl))
+	client, err := elastic.NewClient(elastic.SetURL(esUrl), elastic.SetSniff(false))
 	if err != nil {
 		log.Error("initLog elastic.NewClient error", err)
 	}
