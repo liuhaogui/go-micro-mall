@@ -82,6 +82,7 @@ func GetEsCfg() *ElasticSearch {
 func GetHystrixCfg() *Hystrix {
 	hystrixCfg := &Hystrix{}
 	err := config.C().App("hystrix", hystrixCfg)
+	log.Info("hystrixCfg load config : ",hystrixCfg)
 	if err != nil {
 		panic(err)
 	}
